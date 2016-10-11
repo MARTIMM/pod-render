@@ -1,0 +1,65 @@
+pre.pod-block-code {
+  border-width:         2px;
+  border-style:         solid;
+  border-color:         #006000;
+  padding:              10px 0 3px 10px;
+  color:                #00501e;
+  background-color:     #eaefea;
+  font-family:          FreeMono;
+  box-shadow:           10px 10px 5px #aaafaa;
+  border-radius:        7px;
+  page-break-inside:    avoid;
+}
+
+table {
+  width:                95%;
+}
+
+td {
+  vertical-align:       top;
+}
+
+td.toc-number {
+  width:                30pt;
+}
+
+h1.title {
+  border-width:         1px;
+  border-style:         solid;
+  border-color:         #006000;
+  height:               40px;
+  font-size:            2em;
+  padding-left:         2.5em;
+  padding-top:          2px;
+  background-color:     #c0e472;
+  background-image:     url("https://docs.perl6.org/images/Camelia.svg");
+  background-repeat:    no-repeat;
+  background-position:  7px 0px;
+  background-size:      45px;
+  box-shadow:           10px 10px 5px #a0b060;
+  border-radius:        7px;
+}
+
+a {
+  color:                blue;
+  text-decoration:      none;
+}
+
+a:hover {
+  color:                blue;
+  text-decoration:      underline;
+}
+
+a.u {
+  color:                #607f00;
+  text-decoration:      none;
+}
+
+a.u:hover {
+  color:                #607f00;
+  text-decoration:      underline;
+}
+
+p.subtitle {
+  font-size:            1.3em;
+}

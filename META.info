@@ -1,0 +1,22 @@
+{
+  "authors": [
+    "Marcel Timmerman"
+  ],
+  "depends": [
+    "Pod::To::HTML",
+    "Pod::To::Markdown"
+  ],
+  "description": "Render pod docs to html, pdf or md",
+  "license": "The Artistic License 2.0",
+  "name": "PodRender",
+  "perl": "6.c",
+  "provides": {
+    "PodRender":    "lib/PodRender.pm6"
+  },
+  "resources": [
+    "doc/pod6.css",
+    "bin/pod-render.pl6"
+  ],
+  "source-url": "git://github.com/MARTIMM/pod-render.git",
+  "version": "v0.3.0"
+}
