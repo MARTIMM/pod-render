@@ -30,6 +30,10 @@ class PodRender:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'md', Str:D $pod-file ) {
 
+    my Str $md-file = 'doc/' ~ $pod-file.IO.basename;
+    $md-file ~~ s/\. <-[.]>+ $/.md/;
+
+    shell "perl6 --doc=Markdown " ~ $pod-file.IO.abspath ~ " > $md-file";
   }
 
   #-----------------------------------------------------------------------------
