@@ -29,7 +29,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'pdf', Str:D $pod-file ) {
 
-say "R: ", %?RESOURCES.perl;
+#say "R: ", %?RESOURCES.perl;
     my Str $html = self!html($pod-file.IO.abspath);
 
     my Str $pdf-file;
