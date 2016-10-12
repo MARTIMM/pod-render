@@ -8,14 +8,14 @@
   ],
   "description": "Render pod docs to html, pdf or md",
   "license": "The Artistic License 2.0",
-  "name": "PodRender",
+  "name": "Pod::Render",
   "perl": "6.c",
   "provides": {
-    "PodRender":    "lib/PodRender.pm6"
+    "Pod::Render":    "lib/Pod/Render.pm6"
   },
   "resources": [
     "pod6.css"
   ],
   "source-url": "git://github.com/MARTIMM/pod-render.git",
-  "version": "v0.3.0.5"
+  "version": "v0.3.0.6"
 }

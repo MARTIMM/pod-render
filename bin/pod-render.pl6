@@ -1,9 +1,9 @@
 #!/usr/bin/env perl6
 
 use v6.c;
-use PodRender;
+use Pod::Render;
 
-#say "Resources: ", $%?RESOURCES.perl;
+say "Resources: ", $%?RESOURCES.perl;
 
 #`{{
 sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
