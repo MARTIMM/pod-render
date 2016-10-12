@@ -76,7 +76,8 @@ say "R: ", %?RESOURCES.perl;
   #-----------------------------------------------------------------------------
   method !html ( Str $pod-file --> Str ) {
 
-    my Str $pod-css = 'resources/pod6.css'.IO.abspath;
+  #  my Str $pod-css = 'resources/pod6.css'.IO.abspath;
+    my Str $pod-css = 'https://raw.githubusercontent.com/MARTIMM/pod-render/master/resources/pod6.css';
     my Str $html = '';
 
     # Start translation process
