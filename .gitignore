@@ -1,4 +1,6 @@
 .directory
+*.html
+*/*.html
 Old/*
 Tests/insert*
 *.log
