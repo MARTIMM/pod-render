@@ -5,6 +5,7 @@ use PodRender;
 
 say "Resources: ", $%?RESOURCES.perl;
 
+#`{{
 sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
 
   my PodRender $pr .= new;
@@ -13,5 +14,5 @@ sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
   $pr.render( 'pdf', $pod-file) if $pdf;
   $pr.render( 'md', $pod-file) if $md;
 }
-
+}}
 
