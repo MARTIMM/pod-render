@@ -29,6 +29,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'pdf', Str:D $pod-file ) {
 
+say "R: ", %?RESOURCES.perl;
     my Str $html = self!html($pod-file.IO.abspath);
 
     my Str $pdf-file;
@@ -43,16 +44,16 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
 
     # send result to pdf generator
-#    my Proc $p = shell "wkhtmltopdf - '$pdf-file' &>wkhtml2pdf.log", :in;
-    my Proc $p = shell "wkhtmltopdf - '$pdf-file'", :in, :out;
+    my Proc $p = shell "wkhtmltopdf - '$pdf-file' &>wkhtml2pdf.log", :in;
+#    my Proc $p = shell "wkhtmltopdf - '$pdf-file'", :in, :out;
     $p.in.print($html);
 
-    my Promise $pout .= start( {
-        for $p.err.lines {
-          "Err: ", .say;
-        }
-      }
-    );
+#    my Promise $pout .= start( {
+#        for $p.err.lines {
+#          "Err: ", .say;
+#        }
+#      }
+#    );
   }
 
   #-----------------------------------------------------------------------------
