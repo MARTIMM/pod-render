@@ -1,6 +1,7 @@
 use v6.c;
 use Pod::To::HTML;
 use Pod::To::Markdown;
+use OpenSSL::Digest;
 
 #-------------------------------------------------------------------------------
 #unit package Pod:auth<https://github.com/MARTIMM>;
@@ -29,7 +30,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'pdf', Str:D $pod-file ) {
 
-#say "R: ", %?RESOURCES.perl;
     my Str $html = self!html($pod-file.IO.abspath);
 
     my Str $pdf-file;
@@ -77,9 +77,23 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   method !html ( Str $pod-file --> Str ) {
 
 say "R: ", %?RESOURCES.perl;
+    my Str $css-resource-name = 'resources/pod6.css';
+    my Str $dist-id = %?RESOURCES.dist-id;
+    my Str $pod-css = 'resources/pod6.css';
+    if ?$dist-id {
+      # in installed repo
+      $pod-css = %?RESOURCES.repo ~ sha1("$pod-css$dist-id".encode)>>.fmt(
+        '%02x'
+      ).join.uc ~ $pod-css.IO.extension;
+    }
 
-  #  my Str $pod-css = 'resources/pod6.css'.IO.abspath;
-    my Str $pod-css = 'https://raw.githubusercontent.com/MARTIMM/pod-render/master/resources/pod6.css';
+    else {
+      # in local repo
+      $pod-css = 'file:///home/marcel/Languages/Perl6/Projects/pod-renderresources/pod6.css';
+    }
+
+#    my Str $pod-css = 'resources/pod6.css'.IO.abspath;
+#    my Str $pod-css = 'https://raw.githubusercontent.com/MARTIMM/pod-render/master/resources/pod6.css';
     my Str $html = '';
 
     # Start translation process
