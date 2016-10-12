@@ -3,7 +3,7 @@
 use v6.c;
 use PodRender;
 
-say "Resources: ", $%?RESOURCES.perl;
+#say "Resources: ", $%?RESOURCES.perl;
 
 #`{{
 sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
