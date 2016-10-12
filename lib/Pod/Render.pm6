@@ -3,10 +3,10 @@ use Pod::To::HTML;
 use Pod::To::Markdown;
 
 #-------------------------------------------------------------------------------
-unit package Pod;
+#unit package Pod:auth<https://github.com/MARTIMM>;
 
 #-------------------------------------------------------------------------------
-class Render:auth<https://github.com/MARTIMM> {
+class Pod::Render:auth<https://github.com/MARTIMM> {
 
   #-----------------------------------------------------------------------------
   multi method render ( 'html', Str:D $pod-file ) {
