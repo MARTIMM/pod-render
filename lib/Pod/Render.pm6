@@ -82,9 +82,16 @@ say "R: ", %?RESOURCES.perl;
     my Str $pod-css = 'resources/pod6.css';
     if ?$dist-id {
       # in installed repo
-      $pod-css = %?RESOURCES.repo ~ sha1("$pod-css$dist-id".encode)>>.fmt(
+      my $repo-path = %?RESOURCES.rep;
+      $repo-path ~~ s/ 'inst#' //;
+      $repo-path ~= '/resources/';
+      $pod-css = 'file://' ~
+        $repo-path ~
+        sha1("$pod-css$dist-id".encode)>>.fmt(
         '%02x'
-      ).join.uc ~ $pod-css.IO.extension;
+        ).join.uc ~ $pod-css.IO.extension;
+
+say "P: $pos-css";
     }
 
     else {
