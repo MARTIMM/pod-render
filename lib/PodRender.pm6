@@ -39,7 +39,7 @@ class PodRender { #:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   method !html ( Str $pod-file --> Str ) {
 
-    my Str $pod-css = 'doc/pod6.css'.IO.abspath;
+    my Str $pod-css = 'resources/pod6.css'.IO.abspath;
     my Str $html = '';
 
     # Start translation process
