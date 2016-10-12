@@ -3,10 +3,9 @@
 use v6.c;
 use Pod::Render;
 
-say "Resources: ", $%?RESOURCES.perl;
-
-#`{{
 sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
+
+say "Resources: ", $%?RESOURCES.perl;
 
   my PodRender $pr .= new;
   
@@ -14,5 +13,4 @@ sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
   $pr.render( 'pdf', $pod-file) if $pdf;
   $pr.render( 'md', $pod-file) if $md;
 }
-}}
 
