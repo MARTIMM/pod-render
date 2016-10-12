@@ -75,8 +75,6 @@ class PodRender:auth<https://github.com/MARTIMM> {
     # copy rest of it
     for $p.out.lines -> $line { $html ~= $line ~ "\n"; }
 
-say $html;
-
     $html;
   }
 }
