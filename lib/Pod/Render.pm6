@@ -76,6 +76,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   method !html ( Str $pod-file --> Str ) {
 
+say "R: ", %?RESOURCES.perl;
+
   #  my Str $pod-css = 'resources/pod6.css'.IO.abspath;
     my Str $pod-css = 'https://raw.githubusercontent.com/MARTIMM/pod-render/master/resources/pod6.css';
     my Str $html = '';
@@ -88,7 +90,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       if $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
                      'href="//design.perl6.org/perl.css"' \s*
                      '>' $/ {
-        $html ~= qq|  <link rel="stylesheet" href="file://$pod-css">\n|;
+#        $html ~= qq|  <link rel="stylesheet" href="file://$pod-css">\n|;
+        $html ~= qq|  <link rel="stylesheet" href="$pod-css">\n|;
 #        $html ~= $line ~ "\n";
       }
 

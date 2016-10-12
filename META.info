@@ -13,6 +13,9 @@
   "provides": {
     "Pod::Render":    "lib/Pod/Render.pm6"
   },
+  "resources": [
+    "pod6.css"
+  ],
   "source-url": "git://github.com/MARTIMM/pod-render.git",
-  "version": "v0.3.0.15"
+  "version": "v0.3.0.16"
 }
