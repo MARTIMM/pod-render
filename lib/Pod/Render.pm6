@@ -21,6 +21,12 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'pdf', Str:D $pod-file ) {
 
+say "Resources: ", %?RESOURCES.perl;
+for '.' {
+    .Str.say when !.IO.d;
+    .IO.dir()>>.&?BLOCK when .IO.d # lets recurse a little!
+}
+
     my Str $html = self!html($pod-file.IO.abspath);
 
     my Str $pdf-file = 'doc/' ~ $pod-file.IO.basename;
