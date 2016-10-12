@@ -5,7 +5,7 @@ use Pod::Render;
 
 sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
 
-say "Resources: ", $%?RESOURCES.perl;
+say "Resources: ", %?RESOURCES.perl;
 
   my PodRender $pr .= new;
   

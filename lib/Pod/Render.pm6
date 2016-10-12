@@ -25,6 +25,7 @@ class Render:auth<https://github.com/MARTIMM> {
 
     my Str $pdf-file = 'doc/' ~ $pod-file.IO.basename;
     $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
+say "$pdf-file";
 
     # send result to pdf generator
     my Proc $p = shell "wkhtmltopdf - '$pdf-file' &>wkhtml2pdf.log", :in;
