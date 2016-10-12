@@ -2,7 +2,7 @@ use v6.c;
 use Pod::To::HTML;
 use Pod::To::Markdown;
 
-class PodRender:auth<https://github.com/MARTIMM> {
+class PodRender { #:auth<https://github.com/MARTIMM> {
 
   #-----------------------------------------------------------------------------
   multi method render ( 'html', Str:D $pod-file ) {
