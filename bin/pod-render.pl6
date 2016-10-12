@@ -7,7 +7,7 @@ sub MAIN ( Str $pod-file, Bool :$pdf, Bool :$html, Bool :$md ) {
 
 say "Resources: ", %?RESOURCES.perl;
 
-  my PodRender $pr .= new;
+  my Pod::Render $pr .= new;
   
   $pr.render( 'html', $pod-file) if $html;
   $pr.render( 'pdf', $pod-file) if $pdf;
