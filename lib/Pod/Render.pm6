@@ -77,11 +77,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   method !html ( Str $pod-file --> Str ) {
 
     my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod6.css');
-#note "R: ", %?RESOURCES.perl;
-#note "W: ", %?RESOURCES.WHAT;
-#note "M: ", %?RESOURCES.^methods;
-
-#note $pod-css;
 
     my Str $html = '';
 
@@ -94,7 +89,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
                      'href="//design.perl6.org/perl.css"' \s*
                      '>' $/ {
         $html ~= qq|  <link rel="stylesheet" href="$pod-css">\n|;
-#        $html ~= $line ~ "\n";
       }
 
       # wkhtmltopdf bug or misplaced by Pod::To::HTML? replace id on body to h1
@@ -145,7 +139,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       $repo-path ~~ s/ '/lib' $//;
       $rsrc-path = "$repo-path/resources/$rsrc";
     }
-#say "P: $rsrc-path";
 
     $rsrc-path;
   }
