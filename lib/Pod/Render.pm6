@@ -9,6 +9,9 @@ use OpenSSL::Digest;
 #-------------------------------------------------------------------------------
 class Pod::Render:auth<https://github.com/MARTIMM> {
 
+note "R: ", %?RESOURCES.perl;
+#note "W: ", %?RESOURCES.WHAT;
+#note "M: ", %?RESOURCES.^methods;
   #-----------------------------------------------------------------------------
   multi method render ( 'html', Str:D $pod-file ) {
 
@@ -78,6 +81,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 
     my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod6.css');
 
+note $pod-css;
+
     my Str $html = '';
 
     # Start translation process
@@ -88,7 +93,9 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       if $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
                      'href="//design.perl6.org/perl.css"' \s*
                      '>' $/ {
+say qq|  <link rel="stylesheet" href="$pod-css">|;
         $html ~= qq|  <link rel="stylesheet" href="$pod-css">\n|;
+#        $html ~= $line ~ "\n";
       }
 
       # wkhtmltopdf bug or misplaced by Pod::To::HTML? replace id on body to h1
@@ -112,6 +119,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     # copy rest of it
     for $p.out.lines -> $line { $html ~= $line ~ "\n"; }
 
+say $html;
     $html;
   }
 
@@ -139,6 +147,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       $repo-path ~~ s/ '/lib' $//;
       $rsrc-path = "$repo-path/resources/$rsrc";
     }
+#say "P: $rsrc-path";
 
     $rsrc-path;
   }

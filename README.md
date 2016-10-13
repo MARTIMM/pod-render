@@ -1,23 +1,22 @@
-# Salted Challenge Response Authentication Mechanism (SCRAM)
+# Rendering of pod documents
 
-[![Build Status](https://travis-ci.org/MARTIMM/PKCS5.svg?branch=master)](https://travis-ci.org/MARTIMM/Auth-SCRAM)
-
-Rendering of pod documents
+[![Build Status](https://travis-ci.org/MARTIMM/pod-render.svg?branch=master)](https://travis-ci.org/MARTIMM/pod-render)
 
 ## Synopsis
 
 ```
+pod-render --html lib/Your/Module.pm6
 ```
 
 ## DOCUMENTATION
 
-See pod documentation in lib/PodRender
+See pod documentation in [pod-render.pdf](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/pod-render.pdf) and [Pod::Render](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/Render.pdf).
 
 ## INSTALLING THE MODULES
 
 Use panda to install the package like so.
 ```
-$ panda install PodRender
+$ panda install Pod::Render
 ```
 
 ## Versions of PERL, MOARVM
@@ -25,11 +24,6 @@ $ panda install PodRender
 This project is tested with latest Rakudo built on MoarVM implementing Perl v6.c.
 
 ## BUGS, KNOWN LIMITATIONS
-
-## TODO
-
-* Keep information when calculated. User request boolean and username/password/authzid tuple must be kept the same. This saves time.
-* Channel binding and several other checks
 
 ## CHANGELOG
 
@@ -46,4 +40,4 @@ Marcel Timmerman (MARTIMM on github)
 ```
 ## CONTACT
 
-MARTIMM on github: PKCS5
+MARTIMM on github

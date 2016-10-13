@@ -20,12 +20,26 @@ use Pod::Render;
 
 =head2 Arguments
 
+pod-file. This is the file in which the pod documentation is written and must be
+rendered.
+
+=head2 Options
+
 =head3 --pdf
 
 Generate output in pdf format. Result is placed in current directory or in the
 C<./doc> directory if it exists. Pdf is generated using the program
 B<wkhtmltopdf> so that must be installed.
 
+=head3 --html
+
+Generate output in html format. Result is placed in current directory or in the
+C<./doc> directory if it exists.
+
+=head3 --md
+
+Generate output in md format. Result is placed in current directory or in the
+C<./doc> directory if it exists.
 
 =end pod
 #-------------------------------------------------------------------------------
