@@ -9,10 +9,6 @@ use OpenSSL::Digest;
 #-------------------------------------------------------------------------------
 class Pod::Render:auth<https://github.com/MARTIMM> {
 
-#note "R: ", %?RESOURCES.perl;
-#note "W: ", %?RESOURCES.WHAT;
-#note "M: ", %?RESOURCES.^methods;
-
   #-----------------------------------------------------------------------------
   multi method render ( 'html', Str:D $pod-file ) {
 
@@ -81,6 +77,12 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   method !html ( Str $pod-file --> Str ) {
 
     my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod6.css');
+#note "R: ", %?RESOURCES.perl;
+#note "W: ", %?RESOURCES.WHAT;
+#note "M: ", %?RESOURCES.^methods;
+
+#note $pod-css;
+
     my Str $html = '';
 
     # Start translation process
@@ -91,7 +93,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       if $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
                      'href="//design.perl6.org/perl.css"' \s*
                      '>' $/ {
-#        $html ~= qq|  <link rel="stylesheet" href="file://$pod-css">\n|;
         $html ~= qq|  <link rel="stylesheet" href="$pod-css">\n|;
 #        $html ~= $line ~ "\n";
       }
@@ -133,19 +134,28 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       $repo-path ~= '/resources/';
 
       $rsrc-path = $repo-path ~
-        sha1("resources/$rsrc/$dist-id".encode)>>.fmt(
-        '%02x'
+        self!file-id( "resources/$rsrc", $dist-id)>>.fmt(
+          '%02x'
         ).join.uc ~ '.' ~ $rsrc.IO.extension;
     }
 
     else {
       # in local repo
-      $repo-path ~~ s/ 'file#' //;
+      $repo-path ~~ s/^ 'file#' //;
+      $repo-path ~~ s/ '/lib' $//;
       $rsrc-path = "$repo-path/resources/$rsrc";
     }
 #say "P: $rsrc-path";
 
     $rsrc-path;
+  }
+
+  #-----------------------------------------------------------------------------
+  # Directly from rakudo/src/core/CompUnit/Repository/Installation.pm with
+  # minor changes
+  method !file-id ( Str $name, Str $dist-id) {
+    my $id = $name ~ $dist-id;
+    sha1($id.encode);
   }
 }
 
