@@ -80,7 +80,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   method !html ( Str $pod-file --> Str ) {
 
-    my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod.css');
+    my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod6.css');
     my Str $html = '';
 
     # Start translation process
