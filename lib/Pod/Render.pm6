@@ -9,6 +9,10 @@ use OpenSSL::Digest;
 #-------------------------------------------------------------------------------
 class Pod::Render:auth<https://github.com/MARTIMM> {
 
+#note "R: ", %?RESOURCES.perl;
+#note "W: ", %?RESOURCES.WHAT;
+#note "M: ", %?RESOURCES.^methods;
+
   #-----------------------------------------------------------------------------
   multi method render ( 'html', Str:D $pod-file ) {
 
@@ -76,31 +80,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   method !html ( Str $pod-file --> Str ) {
 
-say "R: ", %?RESOURCES.perl;
-    my Str $css-resource-name = 'resources/pod6.css';
-    my Str $dist-id = %?RESOURCES.dist-id;
-    my Str $pod-css = 'resources/pod6.css';
-    if ?$dist-id {
-      # in installed repo
-      my $repo-path = %?RESOURCES.rep;
-      $repo-path ~~ s/ 'inst#' //;
-      $repo-path ~= '/resources/';
-      $pod-css = 'file://' ~
-        $repo-path ~
-        sha1("$pod-css$dist-id".encode)>>.fmt(
-        '%02x'
-        ).join.uc ~ $pod-css.IO.extension;
-
-say "P: $pos-css";
-    }
-
-    else {
-      # in local repo
-      $pod-css = 'file:///home/marcel/Languages/Perl6/Projects/pod-renderresources/pod6.css';
-    }
-
-#    my Str $pod-css = 'resources/pod6.css'.IO.abspath;
-#    my Str $pod-css = 'https://raw.githubusercontent.com/MARTIMM/pod-render/master/resources/pod6.css';
+    my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod.css');
     my Str $html = '';
 
     # Start translation process
@@ -138,6 +118,34 @@ say "P: $pos-css";
     for $p.out.lines -> $line { $html ~= $line ~ "\n"; }
 
     $html;
+  }
+
+  #-----------------------------------------------------------------------------
+  method !get-abs-rsrc-path ( Str $rsrc --> Str ) {
+
+    my Str $dist-id = %?RESOURCES.dist-id;
+    my Str $repo-path = %?RESOURCES.repo;
+    my Str $rsrc-path;
+
+    if ?$dist-id {
+      # in installed repo
+      $repo-path ~~ s/ 'inst#' //;
+      $repo-path ~= '/resources/';
+
+      $rsrc-path = $repo-path ~
+        sha1("resources/$rsrc/$dist-id".encode)>>.fmt(
+        '%02x'
+        ).join.uc ~ '.' ~ $rsrc.IO.extension;
+    }
+
+    else {
+      # in local repo
+      $repo-path ~~ s/ 'file#' //;
+      $rsrc-path = "$repo-path/resources/$rsrc";
+    }
+#say "P: $rsrc-path";
+
+    $rsrc-path;
   }
 }
 
