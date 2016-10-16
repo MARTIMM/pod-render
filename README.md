@@ -10,7 +10,9 @@ pod-render --html lib/Your/Module.pm6
 
 ## DOCUMENTATION
 
-See pod documentation in [pod-render.pdf](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/pod-render.pdf) and [Pod::Render](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/Render.pdf).
+See pod documentation in
+* [pod-render.pdf](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/pod-render.pdf)
+*  [Pod::Render](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/Render.pdf).
 
 ## INSTALLING THE MODULES
 
@@ -38,6 +40,3 @@ Released under [Artistic License 2.0](http://www.perlfoundation.org/artistic_lic
 ```
 Marcel Timmerman (MARTIMM on github)
 ```
-## CONTACT
-
-MARTIMM on github
