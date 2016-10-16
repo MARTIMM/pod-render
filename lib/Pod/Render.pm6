@@ -1,17 +1,17 @@
 use v6.c;
 use Pod::To::HTML;
 use Pod::To::Markdown;
-use OpenSSL::Digest;
 
 #-------------------------------------------------------------------------------
 #unit package Pod:auth<https://github.com/MARTIMM>;
 
 #-------------------------------------------------------------------------------
+=begin pod
+
+=end pod
+
 class Pod::Render:auth<https://github.com/MARTIMM> {
 
-#note "R: ", %?RESOURCES.perl;
-#note "W: ", %?RESOURCES.WHAT;
-#note "M: ", %?RESOURCES.^methods;
   #-----------------------------------------------------------------------------
   multi method render ( 'html', Str:D $pod-file ) {
 
@@ -80,11 +80,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   method !html ( Str $pod-file --> Str ) {
 
 
-#    my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod6.css');
     my $pod-css = 'file://' ~ %?RESOURCES<pod6.css>;
-
-#note "RH: %?RESOURCES<pod6.css>";
-#note $pod-css;
 
     my Str $html = '';
 
@@ -96,7 +92,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       if $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
                      'href="//design.perl6.org/perl.css"' \s*
                      '>' $/ {
-#say qq|  <link rel="stylesheet" href="$pod-css">|;
         $html ~= qq|  <link rel="stylesheet" href="$pod-css">\n|;
 #        $html ~= $line ~ "\n";
       }
@@ -122,48 +117,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     # copy rest of it
     for $p.out.lines -> $line { $html ~= $line ~ "\n"; }
 
-#say $html;
     $html;
-  }
-}
-
-
-
-=finish
-  #-----------------------------------------------------------------------------
-  method !get-abs-rsrc-path ( Str $rsrc --> Str ) {
-
-    my Str $dist-id = %?RESOURCES.dist-id;
-    my Str $repo-path = %?RESOURCES.repo;
-    my Str $rsrc-path;
-
-    if ?$dist-id {
-      # in installed repo
-      $repo-path ~~ s/ 'inst#' //;
-      $repo-path ~= '/resources/';
-
-      $rsrc-path = $repo-path ~
-        self!file-id( "resources/$rsrc", $dist-id)>>.fmt('%02X').join ~
-          '.' ~ $rsrc.IO.extension;
-    }
-
-    else {
-      # in local repo
-      $repo-path ~~ s/^ 'file#' //;
-      $repo-path ~~ s/ '/lib' $//;
-      $rsrc-path = "$repo-path/resources/$rsrc";
-    }
-#say "P: $rsrc-path";
-
-    $rsrc-path;
-  }
-
-  #-----------------------------------------------------------------------------
-  # Directly from rakudo/src/core/CompUnit/Repository/Installation.pm with
-  # minor changes
-  method !file-id ( Str $name, Str $dist-id) {
-    my $id = $name ~ $dist-id;
-    sha1($id.encode);
   }
 }
 
