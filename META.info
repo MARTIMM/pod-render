@@ -4,7 +4,7 @@
   ],
   "depends": [
     "Pod::To::HTML",
-    "Pod::To::Markdown",
+    "Pod::To::Markdown"
   ],
   "description": "Render pod docs to html, pdf or md",
   "license": "The Artistic License 2.0",
