@@ -9,7 +9,7 @@ use OpenSSL::Digest;
 #-------------------------------------------------------------------------------
 class Pod::Render:auth<https://github.com/MARTIMM> {
 
-note "R: ", %?RESOURCES.perl;
+#note "R: ", %?RESOURCES.perl;
 #note "W: ", %?RESOURCES.WHAT;
 #note "M: ", %?RESOURCES.^methods;
   #-----------------------------------------------------------------------------
@@ -79,9 +79,12 @@ note "R: ", %?RESOURCES.perl;
   #-----------------------------------------------------------------------------
   method !html ( Str $pod-file --> Str ) {
 
-    my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod6.css');
 
-note $pod-css;
+#    my $pod-css = 'file://' ~ self!get-abs-rsrc-path('pod6.css');
+    my $pod-css = 'file://' ~ %?RESOURCES<pod6.css>;
+
+#note "RH: %?RESOURCES<pod6.css>";
+#note $pod-css;
 
     my Str $html = '';
 
@@ -93,7 +96,7 @@ note $pod-css;
       if $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
                      'href="//design.perl6.org/perl.css"' \s*
                      '>' $/ {
-say qq|  <link rel="stylesheet" href="$pod-css">|;
+#say qq|  <link rel="stylesheet" href="$pod-css">|;
         $html ~= qq|  <link rel="stylesheet" href="$pod-css">\n|;
 #        $html ~= $line ~ "\n";
       }
@@ -119,10 +122,14 @@ say qq|  <link rel="stylesheet" href="$pod-css">|;
     # copy rest of it
     for $p.out.lines -> $line { $html ~= $line ~ "\n"; }
 
-say $html;
+#say $html;
     $html;
   }
+}
 
+
+
+=finish
   #-----------------------------------------------------------------------------
   method !get-abs-rsrc-path ( Str $rsrc --> Str ) {
 
@@ -136,9 +143,8 @@ say $html;
       $repo-path ~= '/resources/';
 
       $rsrc-path = $repo-path ~
-        self!file-id( "resources/$rsrc", $dist-id)>>.fmt(
-          '%02x'
-        ).join.uc ~ '.' ~ $rsrc.IO.extension;
+        self!file-id( "resources/$rsrc", $dist-id)>>.fmt('%02X').join ~
+          '.' ~ $rsrc.IO.extension;
     }
 
     else {

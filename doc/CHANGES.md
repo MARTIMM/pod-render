@@ -4,6 +4,8 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
+* 0.5.1
+  * get-abs-rsrc-path is not needed because %?RESOURCES<pod6.css> does it! Might need a few words on the perl6 doc site!
 * 0.5.0
   * Documentation of pod-render.pl6 and Pod::Render
 * 0.4.0
