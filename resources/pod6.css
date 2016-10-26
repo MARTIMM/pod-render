@@ -2,12 +2,13 @@ pre.pod-block-code {
   border-width:         2px;
   border-style:         solid;
   border-color:         #006000;
-  padding:              10px 0 3px 10px;
+  padding:              2px 0 1px 5px;
   color:                #00501e;
   background-color:     #eaefea;
   font-family:          FreeMono;
-  box-shadow:           10px 10px 5px #aaafaa;
-  border-radius:        7px;
+  font-size:            11pt;
+  box-shadow:           16px 6px 4px #aaafaa;
+  border-radius:        4px;
   page-break-inside:    avoid;
 }
 
@@ -78,12 +79,12 @@ code {
 */
   right:                0;
   left:                 0;
-  padding-right:        3px;
+  padding:              2px 5px 0 0;
   background-color:     #c0e472;
-  font-size:            0.7em;
+  font-size:            8pt;
   text-align:           right;
-  box-shadow:           10px 10px 5px #a0b060;
-  border-radius:        7px;
+  box-shadow:           6px 6px 4px #a0b060;
+  border-radius:        4px;
   border-width:         1px;
   border-style:         solid;
   border-color:         #006000;

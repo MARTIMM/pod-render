@@ -1,6 +1,7 @@
 # Rendering of pod documents
 
 [![Build Status](https://travis-ci.org/MARTIMM/pod-render.svg?branch=master)](https://travis-ci.org/MARTIMM/pod-render)
+[![License](http://martimm.github.io/Semi-xml/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
 
 ## Synopsis
 
@@ -12,7 +13,7 @@ pod-render --html lib/Your/Module.pm6
 
 See pod documentation in
 * [pod-render.pdf](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/pod-render.pdf)
-*  [Pod::Render](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/Render.pdf).
+* [Pod::Render](https://raw.githubusercontent.com/MARTIMM/pod-render/master/doc/Render.pdf).
 
 ## INSTALLING THE MODULES
 
@@ -30,10 +31,6 @@ This project is tested with latest Rakudo built on MoarVM implementing Perl v6.c
 ## CHANGELOG
 
 For changes look for the file doc/CHANGES.md in this repository.
-
-## LICENSE
-
-Released under [Artistic License 2.0](http://www.perlfoundation.org/artistic_license_2_0).
 
 ## AUTHORS
 

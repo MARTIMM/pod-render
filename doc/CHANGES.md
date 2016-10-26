@@ -4,6 +4,8 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
+* 0.5.4
+  * Minor css changes
 * 0.5.3
   * C<something> colored to separate it better in the surrounding text.
 * 0.5.2
