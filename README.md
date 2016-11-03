@@ -1,6 +1,7 @@
 # Rendering of pod documents
 
-[![Build Status](https://travis-ci.org/MARTIMM/pod-render.svg?branch=master)](https://travis-ci.org/MARTIMM/pod-render)
+[![Travis Build Status](https://travis-ci.org/MARTIMM/pod-render.svg?branch=master)](https://travis-ci.org/MARTIMM/pod-render)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/MARTIMM/pod-render?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true)](https://ci.appveyor.com/project/MARTIMM/pod-render/branch/master)
 [![License](http://martimm.github.io/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
 
 ## Synopsis
