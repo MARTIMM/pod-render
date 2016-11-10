@@ -127,19 +127,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 #        $html ~= $line ~ "\n";
       }
 
-      # wkhtmltopdf bug or misplaced by Pod::To::HTML? replace id on body to h1
-      # of title
-      elsif $line ~~ m/^ \s* '<body' \s* 'class="pod"' / {
-        $line ~~ s/'id="___top"'//;
-        $html ~= $line ~ "\n";
-      }
-
-      elsif $line ~~ m/^ \s* '<h1' \s* "class='title'" / {
-        $line ~~ s/'<h1' \s* /<h1 id="___top" /;
-        $html ~= $line ~ "\n";
-#        last;
-      }
-
       elsif $line ~~ m/^ \s* '</body>' / {
         $html ~= "<div class=footer>Generated using $!involved\</div>";
         $html ~= $line;
@@ -149,9 +136,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
         $html ~= $line ~ "\n";
       }
     }
-
-    # copy rest of it
-#    for $p.out.lines -> $line { $html ~= $line ~ "\n"; }
 
     $html;
   }
