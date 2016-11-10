@@ -4,6 +4,9 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
+* 0.5.7
+  * Changes caused by bugfix in Pod::To::HTML. This module does not have to repair it anymore.
+  * Change in css for C<data>. Tiny bit larger font.
 * 0.5.6
   * Changes in css to render tables nicer
 * 0.5.5
