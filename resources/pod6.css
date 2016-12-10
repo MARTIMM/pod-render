@@ -1,15 +1,18 @@
-pre.pod-block-code {
+pre {
   border-width:         2px;
   border-style:         solid;
   border-color:         #006000;
   padding:              2px 0 1px 5px;
   color:                #00501e;
-  background-color:     #eaefea;
-  font-family:          FreeMono;
-  font-size:            11pt;
   box-shadow:           16px 6px 4px #aaafaa;
   border-radius:        4px;
   page-break-inside:    avoid;
+}
+
+pre.pod-block-code {
+  background-color:     #eaefea;
+  font-family:          FreeMono;
+  font-size:            11pt;
 }
 
 table {
