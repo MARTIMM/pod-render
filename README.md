@@ -21,14 +21,7 @@ See pod documentation in pdf format at
 
 ## INSTALLING THE MODULES
 
-Use panda to install the package like so.
-```
-$ panda install Pod::Render
-```
-or
-```
-$ zef install Pod::Render
-```
+Use panda or zef to install the package.
 
 ## Versions of PERL, MOARVM
 
