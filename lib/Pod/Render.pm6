@@ -18,7 +18,7 @@ use Pod::To::Markdown;
 
   use Pod::Render;
   my Pod::Render $pr .= new;
-  $pr.render( 'html', 'my-excelent-pod-document.pod6');
+  $pr.render( 'html', 'my-excellent-pod-document.pod6');
 
 =end pod
 #-------------------------------------------------------------------------------
@@ -44,7 +44,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'html', Str:D $pod-file ) {
 
-    $!involved ~= ', Pod::To::HTML';
     my Str $html = self!html($pod-file.IO.abspath);
 
     my Str $html-file;
@@ -63,8 +62,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'pdf', Str:D $pod-file ) {
 
-    $!involved ~= ', Pod::To::HTML, wkhtmltopdf';
     my Str $html = self!html($pod-file.IO.abspath);
+    $!involved ~= ', wkhtmltopdf';
 
     my Str $pdf-file;
     if 'doc'.IO ~~ :d {
@@ -93,6 +92,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   multi method render ( 'md', Str:D $pod-file ) {
 
+    $!involved ~= ', Pod::To::Markdown';
+
     my Str $md-file;
     if 'doc'.IO ~~ :d {
       $md-file = 'doc/' ~ $pod-file.IO.basename;
@@ -110,7 +111,12 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #-----------------------------------------------------------------------------
   method !html ( Str $pod-file --> Str ) {
 
+    $!involved ~= ', Pod::To::HTML, &copy;Google prettify';
 
+#TODO switch between google higlight and original pod-block-code class
+#TODO switch between styles prettify.css desert.css doxy.css etc
+    my $pretty-css = 'file://' ~ %?RESOURCES<google-code-prettify/desert.css>;
+    my $pretty-js = 'file://' ~ %?RESOURCES<google-code-prettify/prettify.js>;
     my $pod-css = 'file://' ~ %?RESOURCES<pod6.css>;
 
     my Str $html = '';
@@ -119,24 +125,52 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     my Proc $p = shell "perl6 --doc=HTML '$pod-file'", :out;
 
     # search for style line in the head and add a new one
-    for $p.out.lines -> $line is copy {
-      if $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
-                     'href="//design.perl6.org/perl.css"' \s*
-                     '>' $/ {
-        $html ~= qq|  <link rel="stylesheet" href="$pod-css">\n|;
-#        $html ~= $line ~ "\n";
+    my @lines = $p.out.lines;
+    for @lines -> $line is copy {
+
+      # insert styles and javascript just after meta
+      if $line ~~ m:s/ '<meta' 'charset="UTF-8"' '/>' / {
+
+        # copy meta line
+        $html ~= "$line\n";
+
+        $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pretty-css">\n|;
+        $html ~= qq|  <script type="text/javascript" src="$pretty-js"></script>\n|;
+        $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pod-css">\n|;
       }
 
-      elsif $line ~~ m/^ \s* '</body>' / {
+       # drop perl6 css
+       elsif $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
+                     'href="//design.perl6.org/perl.css"' \s*
+                     '>' $/ {
+       
+      }
+
+      # add onload to body element
+      elsif $line ~~ m:s/^ \s* '<body ' / {
+        $html ~= qq| <body class="pod" onload="prettyPrint()">\n|;
+      }
+
+      # add prettyprint classes to pre blocks
+      elsif $line ~~ m/^ \s* '<pre' / {
+        $line ~~ s/'<pre class="pod-block-code">'/
+                   <pre class="prettyprint lang-perl6">/;
+        $html ~= "$line\n";
+      }
+
+      # insert extra info in footer element
+      elsif $line ~~ m:s/^ \s* '</body>' / {
         $html ~= "<div class=footer>Generated using $!involved\</div>";
-        $html ~= $line;
+        $html ~= "$line\n";
       }
 
       else {
-        $html ~= $line ~ "\n";
+        $html ~= "$line\n";
       }
+#say $line;
     }
 
+#say $html;
     $html;
   }
 }
