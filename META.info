@@ -16,13 +16,15 @@
   "resources": [
     "pod6.css",
 
-    "google-code-prettify/prettify.css",
     "google-code-prettify/desert.css",
-    "google-code-prettify/docy.css",
+    "google-code-prettify/doxy.css",
+    "google-code-prettify/prettify.css",
+    "google-code-prettify/sons-of-obsidian.css",
+    "google-code-prettify/sunburst.css",
 
     "google-code-prettify/prettify.js",
     "google-code-prettify/run_prettify.js"
   ],
   "source-url": "git://github.com/MARTIMM/pod-render.git",
-  "version": "v0.6.0"
+  "version": "v0.6.1"
 }
