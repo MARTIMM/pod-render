@@ -32,19 +32,20 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   
   =head2 render
 
-    multi method render ( 'html', Str:D $pod-file )
-    multi method render ( 'pdf', Str:D $pod-file )
+    multi method render ( 'html', Str:D $pod-file, Str :$style )
+    multi method render ( 'pdf', Str:D $pod-file, Str :$style )
     multi method render ( 'md', Str:D $pod-file )
 
   Render the document given by C<$pod-file> to one of the output formats html,
   pdf or markdown. To generate pdf the program C<wkhtmltopdf> is used so that
-  program must be installed.
+  program must be installed. The style is one of the following styles;
+  pod6 default desert doxy sons-of-obsidian sunburst.
 
   =end pod
   #-----------------------------------------------------------------------------
-  multi method render ( 'html', Str:D $pod-file ) {
+  multi method render ( 'html', Str:D $pod-file, Str :$style ) {
 
-    my Str $html = self!html($pod-file.IO.abspath);
+    my Str $html = self!html( $pod-file.IO.abspath, :$style);
 
     my Str $html-file;
     if 'doc'.IO ~~ :d {
@@ -60,9 +61,9 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   }
 
   #-----------------------------------------------------------------------------
-  multi method render ( 'pdf', Str:D $pod-file ) {
+  multi method render ( 'pdf', Str:D $pod-file, Str :$style ) {
 
-    my Str $html = self!html($pod-file.IO.abspath);
+    my Str $html = self!html( $pod-file.IO.abspath, :$style);
     $!involved ~= ', wkhtmltopdf';
 
     my Str $pdf-file;
@@ -109,15 +110,16 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   }
 
   #-----------------------------------------------------------------------------
-  method !html ( Str $pod-file --> Str ) {
+  method !html (
+    Str $pod-file,
+    Str :$style is copy where $_ ~~ any(
+          <pod6 default desert doxy sons-of-obsidian sunburst>
+        )
+
+    --> Str
+  ) {
 
     $!involved ~= ', Pod::To::HTML, &copy;Google prettify';
-
-#TODO switch between google higlight and original pod-block-code class
-#TODO switch between styles prettify.css desert.css doxy.css etc
-    my $pretty-css = 'file://' ~ %?RESOURCES<google-code-prettify/desert.css>;
-    my $pretty-js = 'file://' ~ %?RESOURCES<google-code-prettify/prettify.js>;
-    my $pod-css = 'file://' ~ %?RESOURCES<pod6.css>;
 
     my Str $html = '';
 
@@ -134,16 +136,26 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
         # copy meta line
         $html ~= "$line\n";
 
-        $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pretty-css">\n|;
-        $html ~= qq|  <script type="text/javascript" src="$pretty-js"></script>\n|;
-        $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pod-css">\n|;
+        my $pod-css = 'file://' ~ %?RESOURCES<pod6.css>;
+        if $style eq 'pod6' {
+          $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pod-css">\n|;
+        }
+
+        else {
+          $style = 'prettify' if $style eq 'default';
+          my $pretty-css = 'file://' ~ %?RESOURCES{"google-code-prettify/$style.css"};
+          my $pretty-js = 'file://' ~ %?RESOURCES<google-code-prettify/prettify.js>;
+
+          $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pretty-css">\n|;
+          $html ~= qq|  <script type="text/javascript" src="$pretty-js"></script>\n|;
+          $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pod-css">\n|;
+        }
       }
 
-       # drop perl6 css
-       elsif $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
-                     'href="//design.perl6.org/perl.css"' \s*
-                     '>' $/ {
-       
+      # drop perl6 css
+      elsif $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
+                    'href="//design.perl6.org/perl.css"' \s*
+                    '>' $/ {
       }
 
       # add onload to body element
@@ -154,7 +166,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       # add prettyprint classes to pre blocks
       elsif $line ~~ m/^ \s* '<pre' / {
         $line ~~ s/'<pre class="pod-block-code">'/
-                   <pre class="prettyprint lang-perl6">/;
+                   <pre class="prettyprint lang-perl6 linenums">/;
         $html ~= "$line\n";
       }
 

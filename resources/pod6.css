@@ -27,7 +27,13 @@ td {
 
 td.toc-number {
   width:                40pt;
-  /*text-align:           right;*/
+/*  text-align:           right;
+*/
+}
+
+/* Adjust the google settings for linenumber padding */
+ol.linenums {
+  padding:              0;
 }
 
 table.pod-table {
@@ -39,10 +45,11 @@ table.pod-table {
   border-radius:        7px;
   margin-bottom:        15px;
   page-break-inside:    avoid;
+  font-size:            11pt;
 }
 
 table.pod-table tr:nth-child(even) {
-  background:           #e0ffe0;
+  background-color:     #e0ffe0;
   border-width:         1px;
 }
 
