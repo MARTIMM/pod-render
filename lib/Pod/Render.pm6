@@ -78,7 +78,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
 
     # send result to pdf generator
-    my Proc $p = shell "wkhtmltopdf - '$pdf-file' &>wkhtml2pdf.log", :in;
+    my Proc $p = shell "wkhtmltopdf - '$pdf-file' 2>&1 > wkhtml2pdf.log", :in;
 #    my Proc $p = shell "wkhtmltopdf - '$pdf-file'", :in, :out;
     $p.in.print($html);
 
