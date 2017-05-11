@@ -125,7 +125,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     my Str $html = '';
 
     # Start translation process
-    my Proc $p = shell "perl6 --doc=HTML '$pod-file'", :out;
+    my Proc $p = run "perl6", "--doc=HTML", $pod-file, :out;
 
     # search for style line in the head and add a new one
     my @lines = $p.out.lines;
