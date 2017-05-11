@@ -106,7 +106,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 
     $md-file ~~ s/\. <-[.]>+ $/.md/;
 
-    shell "perl6 --doc=Markdown " ~ $pod-file.IO.absolute ~ " > $md-file";
+    my $cmd = run "perl6", "--doc=Markdown", $pod-file.IO.absolute, :out;
+    $md-file.IO.spurt($cmd.out.slurp);
   }
 
   #-----------------------------------------------------------------------------
