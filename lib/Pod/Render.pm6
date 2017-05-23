@@ -29,7 +29,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   #=============================================================================
   =begin pod
   =head1 Methods
-  
+
   =head2 render
 
     multi method render ( 'html', Str:D $pod-file, Str :$style )
@@ -78,16 +78,9 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
 
     # send result to pdf generator
-    my Proc $p = shell "wkhtmltopdf - '$pdf-file' 2>&1 > wkhtml2pdf.log", :in;
-#    my Proc $p = shell "wkhtmltopdf - '$pdf-file'", :in, :out;
+    my Proc $p = shell "wkhtmltopdf - '$pdf-file'", :in;
     $p.in.print($html);
-
-#    my Promise $pout .= start( {
-#        for $p.err.lines {
-#          "Err: ", .say;
-#        }
-#      }
-#    );
+    $p.in.close;
   }
 
   #-----------------------------------------------------------------------------
@@ -187,4 +180,3 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     $html;
   }
 }
-
