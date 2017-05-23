@@ -78,7 +78,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
 
     # send result to pdf generator
-    my Proc $p = shell "wkhtmltopdf - '$pdf-file' &>wkhtml2pdf.log", :in;
+    my Proc $p = shell "wkhtmltopdf - '$pdf-file' 2>&1 > wkhtml2pdf.log", :in;
 #    my Proc $p = shell "wkhtmltopdf - '$pdf-file'", :in, :out;
     $p.in.print($html);
 
@@ -106,7 +106,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 
     $md-file ~~ s/\. <-[.]>+ $/.md/;
 
-    shell "perl6 --doc=Markdown " ~ $pod-file.IO.absolute ~ " > $md-file";
+    my $cmd = run "perl6", "--doc=Markdown", $pod-file.IO.absolute, :out;
+    $md-file.IO.spurt($cmd.out.slurp);
   }
 
   #-----------------------------------------------------------------------------
@@ -124,7 +125,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     my Str $html = '';
 
     # Start translation process
-    my Proc $p = shell "perl6 --doc=HTML '$pod-file'", :out;
+    my Proc $p = run "perl6", "--doc=HTML", $pod-file, :out;
 
     # search for style line in the head and add a new one
     my @lines = $p.out.lines;
