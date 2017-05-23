@@ -1,4 +1,4 @@
-use v6.c;
+use v6;
 use Pod::To::HTML;
 use Pod::To::Markdown;
 

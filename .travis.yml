@@ -8,7 +8,7 @@ perl6:
   - latest
 
 install:
-  - rakudobrew build-panda ${TRAVIS_PERL6_VERSION#latest}
+  - rakudobrew build-zef ${TRAVIS_PERL6_VERSION#latest}
   - zef --depsonly install .
 
 cache:
