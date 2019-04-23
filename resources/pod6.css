@@ -66,7 +66,8 @@ h1.title {
   padding-left:         2.0em;
   padding-top:          2px;
   background-color:     #c0e472;
-  background-image:     url("https://docs.perl6.org/images/Camelia.svg");
+/*  background-image:     url("https://docs.perl6.org/images/Camelia.svg");
+*/
   background-repeat:    no-repeat;
   background-position:  7px 0px;
   background-size:      45px;
@@ -123,4 +124,3 @@ code {
   border-style:         solid;
   border-color:         #006000;
 }
-

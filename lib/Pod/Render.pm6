@@ -113,7 +113,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     --> Str
   ) {
 
-    $!involved ~= ', Pod::To::HTML, &copy;Google prettify';
+    $!involved ~= ', Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)';
 
     my Str $html = '';
 
@@ -170,13 +170,17 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
         $html ~= "$line\n";
       }
 
-      else {
+      elsif $line ~~ m/'h1' \s+ "class='title'"/ {
+        my Str $camelia = 'file://' ~ %?RESOURCES<Camelia.svg>.Str;
+        $line ~~ s/'h1' \s+ "class='title'"/h1 class='title' style='background-image:url($camelia);'/;
         $html ~= "$line\n";
       }
-#say $line;
+
+      else {
+        $html ~= "$line\n";
+      }#say $line;
     }
 
-#say $html;
     $html;
   }
 }
