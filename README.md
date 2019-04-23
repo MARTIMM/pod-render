@@ -25,7 +25,7 @@ Use zef to install the package.
 
 ## Versions of PERL, MOARVM
 
-This project is tested with latest Rakudo built on MoarVM implementing Perl v6.c.
+This project is tested with latest Rakudo built on MoarVM implementing Perl v6.
 
 ## AUTHORS
 
