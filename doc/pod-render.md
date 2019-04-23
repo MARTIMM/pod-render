@@ -1,32 +1,30 @@
-TITLE
-=====
+# TITLE
 
 pod-render.pl6
 
-SUBTITLE
-========
+# SUBTITLE
 
 Program to render Pod documentation
 
-Synopsis
-========
+# Synopsis
 
     pod-render.pl6 --pdf bin/pod-render.pl6
 
-Usage
-=====
+or
+
+    pod-render.pl6 --style=desert --html bin/pod-render.pl6
+
+# Usage
 
     pod-render.pl6 [options] <pod-file>
 
-Arguments
----------
+## Arguments
 
 ### pod-file
 
 This is the file in which the pod documentation is written and must be rendered.
 
-Options
--------
+## Options
 
 ### --pdf
 
