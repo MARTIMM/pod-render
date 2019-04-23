@@ -56,20 +56,31 @@ more than one document at once.
 
 =end pod
 #-------------------------------------------------------------------------------
-
 sub MAIN (
-  Str $pod-file,
+  *@pod-files, Str :$style = 'default',
   Bool :$pdf = False, Bool :$html = False, Bool :$md = False,
-
-  Str :$style = 'default'
 ) {
 
   my Pod::Render $pr .= new;
 
-  $pr.render( 'html', $pod-file, :$style) if $html;
-  $pr.render( 'pdf', $pod-file, :$style) if $pdf;
-  $pr.render( 'md', $pod-file) if $md;
+  for @pod-files -> $pod-file {
 
-  # Default is html
-  $pr.render( 'html', $pod-file, :$style) unless $html or $pdf or $md;
+    $pr.render( 'html', $pod-file, :$style) if $html;
+    $pr.render( 'pdf', $pod-file, :$style) if $pdf;
+    $pr.render( 'md', $pod-file) if $md;
+
+    # Default is html
+    $pr.render( 'html', $pod-file, :$style) unless $html or $pdf or $md;
+  }
+}
+
+#-------------------------------------------------------------------------------
+sub USAGE ( ) {
+
+  note Q:q:to/EOUSAGE/;
+
+  Usage:
+    pod-render.pl6 [--pdf] [--html] [--md] [--style=<Str>] <pod-file>
+
+  EOUSAGE
 }

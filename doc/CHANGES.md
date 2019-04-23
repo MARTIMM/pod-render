@@ -4,6 +4,8 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
+* 2019-04-18 0.7.3
+  * Camelia.svg is stored in resources now.
 * 0.7.2
   * Samantha McVey found an error in the redirection to the external program for generating PDF files
   * Generating the PDF finishes now before the program finishes. This will let the command prompt be shown properly after that.
