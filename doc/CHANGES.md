@@ -4,7 +4,9 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
-* 2019-04-24 0.7.4
+* 2019-04-24 0.7.5
+  * Bugfixes
+* 2019-04-23 0.7.4
   * The program `pod-render.pl6` can process multiple files. Also it will descend directories recursively when a directory is provided in the argument list.
   * Program usage is shown using a filtered version of `perl6 --doc=Text` of the programs pod information.
   * Generate a list of markdown references when using `--g`. This can be used in e.g. `README.md`.
