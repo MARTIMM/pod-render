@@ -14,7 +14,7 @@ change at any time. The public API should not be considered stable.*
 * 2019-04-18 0.7.3
   * The file Camelia.svg is stored in resources now and used from there instead of referencing it to the website where it is shown.
 * 0.7.2
-  * Samantha McVey found an error in the redirection to the external program for generating PDF files
+  * Samantha McVey found an error in the redirection to the external program for generating PDF files. Thanks Samantha!
   * Generating the PDF finishes now before the program finishes. This will let the command prompt be shown properly after that.
 * 0.7.1 Operation Zoffix Znet to modify abspath() into absolute(), Thanks Zoffix!
 * 0.7.0

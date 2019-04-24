@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>pod-render.pl6</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/7C320646D139C8A72FF800C3E2B2EB89B53BEB5B.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title'>pod-render.pl6</h1>
+    <p class='subtitle'>Program to render Perl6 Pod documentation</p>
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+  <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+  <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Usage">Usage</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#Arguments">Arguments</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">2.1.1</td><td class="toc-text"><a href="#pod-file">pod-file</a></td></tr>
+        <tr class="toc-level-3"><td class="toc-number">2.1.2</td><td class="toc-text"><a href="#pod-dir">pod-dir</a></td></tr>
+              <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#Options">Options</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">2.2.1</td><td class="toc-text"><a href="#--g=github-path">--g=github-path</a></td></tr>
+            <tr class="toc-level-3"><td class="toc-number">2.2.2</td><td class="toc-text"><a href="#--html">--html</a></td></tr>
+    <tr class="toc-level-3"><td class="toc-number">2.2.3</td><td class="toc-text"><a href="#--md">--md</a></td></tr>
+    <tr class="toc-level-3"><td class="toc-number">2.2.4</td><td class="toc-text"><a href="#--pdf">--pdf</a></td></tr>
+      <tr class="toc-level-3"><td class="toc-number">2.2.5</td><td class="toc-text"><a href="#--style=some-prettify-style">--style=some-prettify-style</a></td></tr>
+                 
+</table>
+</nav>
+
+    <div class="pod-body">
+    <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+
+                   <pre class="prettyprint lang-perl6 linenums">pod-render.pl6 --pdf bin/pod-render.pl6</pre>
+<h1 id="Usage"><a class="u" href="#___top" title="go to top of document">Usage</a></h1>
+<p>pod-render.pl6 [&lt;<var>options</var>&gt; ...] &lt;<var>pod-file | pod-dir</var>&gt; ...</p>
+<h2 id="Arguments"><a class="u" href="#___top" title="go to top of document">Arguments</a></h2>
+<h3 id="pod-file"><a class="u" href="#___top" title="go to top of document">pod-file</a></h3>
+<p>This is the file where to find the pod documentation and is rendered. The result is placed in the current directory or, when a directory <strong>doc</strong> exists, in that directory. A pod file is checked to have at least 5 pod render commands like <code>=begin ...</code> or <code>=for ...</code> to get rendered.</p>
+<h3 id="pod-dir"><a class="u" href="#___top" title="go to top of document">pod-dir</a></h3>
+<p>Search directory and subdirectories for perl6 pod documentation looking for extensions <strong>.pl6</strong>, <strong>.pm6</strong>, <strong>.pod6</strong>, <strong>.pl</strong>, <strong>.pm</strong> or <strong>.pod</strong>.</p>
+<h2 id="Options"><a class="u" href="#___top" title="go to top of document">Options</a></h2>
+<h3 id="--g=github-path"><a class="u" href="#___top" title="go to top of document">--g=github-path</a></h3>
+<p>Generate a list of markdown references into the file <strong>markdown-refs.md</strong>. The format of this file will be like the following;</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">[pod-render.pl6]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/pod-render.html
+[Render.pm6]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/Render.html</pre>
+<p>Where the github path is <strong>github.com/MARTIMM/pod-render</strong> and the pod files are found at <strong>bin/pod-render.pl6</strong> and <strong>lib/Pod/Render.pm6</strong>.</p>
+<h3 id="--html"><a class="u" href="#___top" title="go to top of document">--html</a></h3>
+<p>Generate output in html format. This is the default. Result is placed in the current directory or in the <strong>./doc</strong> directory if it exists.</p>
+<h3 id="--md"><a class="u" href="#___top" title="go to top of document">--md</a></h3>
+<p>Generate output in md format. Result is placed in current directory or in the <strong>./doc</strong> directory if it exists.</p>
+<h3 id="--pdf"><a class="u" href="#___top" title="go to top of document">--pdf</a></h3>
+<p>Generate output in pdf format. Result is placed in current directory or in the <strong>./doc</strong> directory if it exists. Pdf is generated using the program <strong>wkhtmltopdf</strong> so that must be installed.</p>
+<h3 id="--style=some-prettify-style"><a class="u" href="#___top" title="go to top of document">--style=some-prettify-style</a></h3>
+<p>This program uses the Google prettify javascript and stylesheets to render the code. The styles are <code>default</code>, <code>desert</code>, <code>doxy</code>, <code>sons-of-obsidian</code> and <code>sunburst</code>. By default the progam uses, well you guessed it, &#39;default&#39;. This option is only useful with <code>--html</code> and <code>--pdf</code>. There is another style which is just plain and simple and not used with the google prettifier. This one is selected using <code>pod6</code>.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify</div>    </body>
+</html>
+
