@@ -4,8 +4,13 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
+* 2019-04-24 0.7.4
+  * The program `pod-render.pl6` can process multiple files. Also it will descend directories recursively when a directory is provided in the argument list.
+  * Program usage is shown using a filtered version of `perl6 --doc=Text` of the programs pod information.
+  * Generate a list of markdown references when using `--g`. This can be used in e.g. `README.md`.
+  * Added doc references in `README.md`.
 * 2019-04-18 0.7.3
-  * Camelia.svg is stored in resources now.
+  * The file Camelia.svg is stored in resources now and used from there instead of referencing it to the website where it is shown.
 * 0.7.2
   * Samantha McVey found an error in the redirection to the external program for generating PDF files
   * Generating the PDF finishes now before the program finishes. This will let the command prompt be shown properly after that.
