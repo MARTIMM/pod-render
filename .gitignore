@@ -7,3 +7,4 @@ Tests/insert*
 .precomp
 */.procomp
 *.zargo~
+markdown-refs.md
