@@ -12,8 +12,6 @@ use Pod::To::Markdown;
 
 =SUBTITLE Render POD documents to HTML, PDF or MD
 
-  class Pod::Render { ... }
-
 =head1 Synopsis
 
   use Pod::Render;
@@ -39,7 +37,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   Render the document given by C<$pod-file> to one of the output formats html,
   pdf or markdown. To generate pdf the program C<wkhtmltopdf> is used so that
   program must be installed. The style is one of the following styles;
-  pod6 default desert doxy sons-of-obsidian sunburst.
+  pod6, default, desert, doxy, sons-of-obsidian or sunburst.
 
   =end pod
   #-----------------------------------------------------------------------------
