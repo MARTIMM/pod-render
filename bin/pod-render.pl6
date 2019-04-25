@@ -76,7 +76,7 @@ sub recurse-dir (
 ) {
 
   if $pod.IO.d {
-    for dir($pod) -> $pf {
+    for dir($pod).sort -> $pf {
 
       # scan sub dirs and pod files. rest is ignored
       recurse-dir( $pf.Str, :$g, :$style, :$pdf, :$html, :$md)
@@ -100,7 +100,7 @@ sub recurse-dir (
         $pod-ref = $pod;
         $pod-ref ~~ s/ \. <-[.]>* $//;
         $pod-ref ~~ s/ lib '/' //;
-        $pod-ref ~~ s/ \/ /::/;
+        $pod-ref ~~ s:g/ \/ /::/;
       }
 
       else {
