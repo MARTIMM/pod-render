@@ -111,7 +111,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     --> Str
   ) {
 
-    $!involved ~= ', Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)';
+    $!involved ~= ', Pod::To::HTML, &copy;Google prettify, Camelia™ (butterfly) is © 2009 by Larry Wall';
 
     my Str $html = '';
 
