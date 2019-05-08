@@ -4,6 +4,9 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
+* 2019-04-24 0.7.6
+  * Changed html to pdf converter to use `prince`.
+  * Removed google prettify and with that the `--style` option to `pod-render.pl6`
 * 2019-04-24 0.7.5
   * Bugfixes
 * 2019-04-23 0.7.4

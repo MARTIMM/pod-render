@@ -10,6 +10,8 @@ pod-render --html lib/Your/Module.pm6
 
 ## Documentation
 
+The pdf output is generated with the program `prince`. You can find the downdload page [here](https://www.princexml.com/download/).
+
 ### Program and library
 * [pod-render.pl6 html][pod-render.pl6 html]
 * [Pod::Render html][Pod::Render html]
@@ -31,14 +33,19 @@ pod-render --html lib/Your/Module.pm6
 
 This project is tested with latest Rakudo built on MoarVM implementing Perl v6.
 
-## AUTHORS
+## Authors
 
 `© Marcel Timmerman (MARTIMM on github)`
 
+## Attribution
 
-[Pod::Render html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/Render.html
-[Pod::Render pdf]: https://github.com/MARTIMM/pod-render/blob/master/doc/Render.pdf
-[Pod::Render md]: https://github.com/MARTIMM/pod-render/blob/master/doc/Render.md
-[pod-render.pl6 html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/pod-render.html
-[pod-render.pl6 pdf]: https://github.com/MARTIMM/pod-render/blob/master/doc/pod-render.pdf
+* `Pod::To::HTML`
+* Camelia™ (butterfly) is © 2009 by Larry Wall
+
+
+[pod-render.pl6 html]: https://nbviewer.jupyter.org/github/MARTIMM/pod-render/blob/master/doc/pod-render.html
+[pod-render.pl6 pdf]: https://nbviewer.jupyter.org/github/MARTIMM/pod-render/blob/master/doc/pod-render.pdf
 [pod-render.pl6 md]: https://github.com/MARTIMM/pod-render/blob/master/doc/pod-render.md
+[Pod::Render html]: https://nbviewer.jupyter.org/github/MARTIMM/pod-render/blob/master/doc/Render.html
+[Pod::Render pdf]: https://nbviewer.jupyter.org/github/MARTIMM/pod-render/blob/master/doc/Render.pdf
+[Pod::Render md]: https://github.com/MARTIMM/pod-render/blob/master/doc/Render.md
