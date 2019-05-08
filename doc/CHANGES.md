@@ -7,6 +7,7 @@ change at any time. The public API should not be considered stable.*
 * 2019-04-24 0.7.6
   * Changed html to pdf converter to use `prince`.
   * Removed google prettify and with that the `--style` option to `pod-render.pl6`
+  * Dropped the inline style too and moved to `pod6.css`.
 * 2019-04-24 0.7.5
   * Bugfixes
 * 2019-04-23 0.7.4
