@@ -1,3 +1,21 @@
+kbd {
+  font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace
+}
+
+samp {
+  font-family: "Terminus", "Courier", "Lucida Console", monospace
+}
+
+/*u { text-decoration: none }*/
+
+.nested {
+  margin-left: 3em;
+}
+
+/*aside, u { opacity: 0.7 }*/
+
+a[id^="fn-"]:target { background: #ff0 }
+
 body, p {
   font-size:            12pt;
 }
@@ -52,6 +70,11 @@ tr.toc-level-1 tr.toc-level-2 tr.toc-level-3 tr.toc-level-4 tr.toc-level-5 tr.to
 
 #TOC_Title {
   font-size:            16pt;
+  font-weight:          bold;
+}
+
+p.subtitle {
+  font-size:            0.5em;
   font-weight:          bold;
 }
 
@@ -152,14 +175,19 @@ a.u:hover {
   text-decoration:      underline;
 }
 
-p.subtitle {
-  font-size:            0.5em;
-  font-weight:          bold;
-}
-
 code {
   color:                #208072;
-  font-size:            12pt;
+/*  font-size:            12pt;*/
+}
+
+u {
+  color:                #208072;
+  text-decoration:      underline #208072 initial !important;
+}
+
+b {
+  color:                #208072;
+  font-weight:          bold;
 }
 
 .footer {

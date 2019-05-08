@@ -114,11 +114,17 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
     my Proc $p = run "perl6", "--doc=HTML", $pod-file, :out;
 
     # search for style line in the head and add a new one
+    my Bool $drop-lines = False;
     my @lines = $p.out.lines;
     for @lines -> $line is copy {
 
+      if $drop-lines {
+        $drop-lines = False if $line ~~ m:s/^ \s* '</style>' /;
+        next;
+      }
+
       # insert styles and javascript just after meta
-      if $line ~~ m:s/ '<meta' 'charset="UTF-8"' '/>' / {
+      elsif $line ~~ m:s/ '<meta' 'charset="UTF-8"' '/>' / {
 
         # copy meta line
         $html ~= "$line\n";
@@ -131,6 +137,12 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
       elsif $line ~~ m/^ \s* '<link' \s* 'rel="stylesheet"' \s*
                     'href="//design.perl6.org/perl.css"' \s*
                     '>' $/ {
+      }
+
+      # drop inline css
+      elsif $line ~~ m:s/^ \s* '<style>' / {
+        $drop-lines = True;
+        next;
       }
 
       # add onload to body element
@@ -146,7 +158,8 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 
       elsif $line ~~ m/'h1' \s+ "class='title'"/ {
         my Str $camelia = 'file://' ~ %?RESOURCES<Camelia.svg>.Str;
-        $line ~~ s/'h1' \s+ "class='title'"/div class='title h1'><img src= '$camelia' align='left'/;
+        $line ~~ s/'h1' \s+ "class='title'"/div class='title'><img src='$camelia' align='left' \//;
+        $line ~~ s/'</h1>'/\<\/div\>/;
         $html ~= "$line\n";
       }
 
