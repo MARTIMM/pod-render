@@ -30,20 +30,20 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 
   =head2 render
 
-    multi method render ( 'html', Str:D $pod-file, Str :$style )
-    multi method render ( 'pdf', Str:D $pod-file, Str :$style )
+    multi method render ( 'html', Str:D $pod-file )
+    multi method render ( 'pdf', Str:D $pod-file )
     multi method render ( 'md', Str:D $pod-file )
 
   Render the document given by C<$pod-file> to one of the output formats html,
-  pdf or markdown. To generate pdf the program C<wkhtmltopdf> is used so that
+  pdf or markdown. To generate pdf the program C<prince> is used so that
   program must be installed. The style is one of the following styles;
   pod6, default, desert, doxy, sons-of-obsidian or sunburst.
 
   =end pod
   #-----------------------------------------------------------------------------
-  multi method render ( 'html', Str:D $pod-file, Str :$style ) {
+  multi method render ( 'html', Str:D $pod-file ) {
 
-    my Str $html = self!html( $pod-file.IO.absolute, :$style);
+    my Str $html = self!html($pod-file.IO.absolute);
 
     my Str $html-file;
     if 'doc'.IO ~~ :d {
@@ -59,26 +59,28 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   }
 
   #-----------------------------------------------------------------------------
-  multi method render ( 'pdf', Str:D $pod-file, Str :$style ) {
+  multi method render ( 'pdf', Str:D $pod-file ) {
 
-    my Str $html = self!html( $pod-file.IO.absolute, :$style);
-    $!involved ~= ', wkhtmltopdf';
+    my Str $html = self!html($pod-file.IO.absolute);
+    $!involved ~= ', prince';
 
-    my Str $pdf-file;
+    my Str $html-file;
     if 'doc'.IO ~~ :d {
-      $pdf-file = 'doc/' ~ $pod-file.IO.basename;
+      $html-file = 'doc/' ~ $pod-file.IO.basename;
     }
 
     else {
-      $pdf-file = $pod-file.IO.basename;
+      $html-file = $pod-file.IO.basename;
     }
 
+    $html-file ~~ s/\. <-[.]>+ $/.html/;
+    spurt( $html-file, $html);
+
+    my Str $pdf-file = $html-file;
     $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
 
     # send result to pdf generator
-    my Proc $p = shell "wkhtmltopdf - '$pdf-file'", :in;
-    $p.in.print($html);
-    $p.in.close;
+    run 'prince', $html-file, '-o', $pdf-file;
   }
 
   #-----------------------------------------------------------------------------
@@ -102,16 +104,9 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
   }
 
   #-----------------------------------------------------------------------------
-  method !html (
-    Str $pod-file,
-    Str :$style is copy where $_ ~~ any(
-          <pod6 default desert doxy sons-of-obsidian sunburst>
-        )
+  method !html ( Str $pod-file --> Str ) {
 
-    --> Str
-  ) {
-
-    $!involved ~= ', Pod::To::HTML, &copy;Google prettify, Camelia™ (butterfly) is © 2009 by Larry Wall';
+    $!involved ~= ', Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall';
 
     my Str $html = '';
 
@@ -129,19 +124,7 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
         $html ~= "$line\n";
 
         my $pod-css = 'file://' ~ %?RESOURCES<pod6.css>;
-        if $style eq 'pod6' {
-          $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pod-css">\n|;
-        }
-
-        else {
-          $style = 'prettify' if $style eq 'default';
-          my $pretty-css = 'file://' ~ %?RESOURCES{"google-code-prettify/$style.css"};
-          my $pretty-js = 'file://' ~ %?RESOURCES<google-code-prettify/prettify.js>;
-
-          $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pretty-css">\n|;
-          $html ~= qq|  <script type="text/javascript" src="$pretty-js"></script>\n|;
-          $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pod-css">\n|;
-        }
+        $html ~= qq|  <link type="text/css" rel="stylesheet" href="$pod-css">\n|;
       }
 
       # drop perl6 css
@@ -155,13 +138,6 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
         $html ~= qq| <body class="pod" onload="prettyPrint()">\n|;
       }
 
-      # add prettyprint classes to pre blocks
-      elsif $line ~~ m/^ \s* '<pre' / {
-        $line ~~ s/'<pre class="pod-block-code">'/
-                   <pre class="prettyprint lang-perl6 linenums">/;
-        $html ~= "$line\n";
-      }
-
       # insert extra info in footer element
       elsif $line ~~ m:s/^ \s* '</body>' / {
         $html ~= "<div class=footer>Generated using $!involved\</div>";
@@ -170,13 +146,13 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 
       elsif $line ~~ m/'h1' \s+ "class='title'"/ {
         my Str $camelia = 'file://' ~ %?RESOURCES<Camelia.svg>.Str;
-        $line ~~ s/'h1' \s+ "class='title'"/h1 class='title' style='background-image:url($camelia);'/;
+        $line ~~ s/'h1' \s+ "class='title'"/div class='title h1'><img src= '$camelia' align='left'/;
         $html ~= "$line\n";
       }
 
       else {
         $html ~= "$line\n";
-      }#say $line;
+      }
     }
 
     $html;

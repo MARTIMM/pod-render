@@ -32,8 +32,10 @@ pod-render.pl6 [<R<options>> ...] <R<pod-file | pod-dir>> ...
 
 Generate a list of markdown references into the file B<markdown-refs.md>. The format of this file will be like the following;
 
-  [pod-render.pl6]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/pod-render.html
-  [Render.pm6]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/Render.html
+  [pod-render.pl6 html]: https://nbviewer.jupyter.org/github/MARTIMM/pod ...
+  [pod-render.pl6 pdf]: https://nbviewer.jupyter.org/github/MARTIMM/pod- ...
+  [pod-render.pl6 md]: https://github.com/MARTIMM/pod-render/blob/master ...
+  ...
 
 Where the github path is B<github.com/MARTIMM/pod-render> and the pod files are found at B<bin/pod-render.pl6> and B<lib/Pod/Render.pm6>.
 
@@ -47,24 +49,21 @@ Generate output in md format. Result is placed in current directory or in the B<
 
 =head3 --pdf
 
-Generate output in pdf format. Result is placed in current directory or in the B<./doc> directory if it exists. Pdf is generated using the program B<wkhtmltopdf> so that must be installed.
-
-=head3 --style=some-prettify-style
-
-This program uses the Google prettify javascript and stylesheets to render the code. The styles are C<default>, C<desert>, C<doxy>, C<sons-of-obsidian> and C<sunburst>. By default the progam uses, well you guessed it, 'default'. This option is only useful with C<--html> and C<--pdf>. There is another style which is just plain and simple and not used with the google prettifier. This one is selected using C<pod6>.
+Generate output in pdf format. Result is placed in current directory or in the B<./doc> directory if it exists. Pdf is generated using the program B<prince> so that must be installed. See L<downloads|https://www.princexml.com/download/>.
 
 =end pod
 #-------------------------------------------------------------------------------
 my Str $md-refs = '';
-my Str $pv = 'https://htmlpreview.github.io/?';
+#my Str $pv = 'https://htmlpreview.github.io/?';
+my Str $pv = 'https://nbviewer.jupyter.org/github/';
 
 sub MAIN (
-  *@pod-files, Str :$style = 'default', Str :$g,
+  *@pod-files, Str :$g,
   Bool :$pdf = False, Bool :$html = False, Bool :$md = False
 ) {
 
   for @pod-files -> $pod {
-    recurse-dir( $pod, :$g, :$style, :$pdf, :$html, :$md);
+    recurse-dir( $pod, :$g, :$pdf, :$html, :$md);
   }
 
   'markdown-refs.md'.IO.spurt($md-refs) if ?$g and $md-refs;
@@ -72,24 +71,27 @@ sub MAIN (
 
 #-------------------------------------------------------------------------------
 sub recurse-dir (
-  Str:D $pod, Str :$style, Str :$g, Bool :$pdf, Bool :$html is copy, Bool :$md
+  Str:D $pod, Str :$g, Bool :$pdf, Bool :$html is copy, Bool :$md
 ) {
 
   if $pod.IO.d {
     for dir($pod).sort -> $pf {
 
       # scan sub dirs and pod files. rest is ignored
-      recurse-dir( $pf.Str, :$g, :$style, :$pdf, :$html, :$md)
+      recurse-dir( $pf.Str, :$g, :$pdf, :$html, :$md)
         if $pf.IO.d or $pf.IO.extension ~~ m/^ [ pm || pl || pod ] 6? $/;
     }
   }
 
   else {
     return unless check-pod($pod);
-    $html = True if ?$g or !($pdf or $md);
+    #$html = True if ?$g or !($pdf or $md);
+
+    # when pdf is selected html is automatically generated too in this process
+    $html = True if $pdf;
 
     note "Render pod in $pod";
-    render-pod( $pod, :$style, :$pdf, :$html, :$md);
+    render-pod( $pod, :$pdf, :$html, :$md);
 
     if ?$g {
       my Str $pod-ref;
@@ -106,21 +108,22 @@ sub recurse-dir (
       else {
         $pod-ref = $pod.IO.basename;
       }
-
+#https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GObject.pdf
+      # write out entries
       if $html {
-        $md-refs ~= [~] '[', $pod-ref, ' html]: ', $pv, 'https://', $g,
+        $md-refs ~= [~] '[', $pod-ref, ' html]: ', $pv, $g,
                     '/blob/master', 'doc'.IO.d ?? '/doc/' !! '/',
                     $pod-bn, ".html\n";
       }
 
       if $pdf {
-        $md-refs ~= [~] '[', $pod-ref, ' pdf]: ', 'https://', $g,
+        $md-refs ~= [~] '[', $pod-ref, ' pdf]: ', $pv, $g,
                     '/blob/master', 'doc'.IO.d ?? '/doc/' !! '/',
                     $pod-bn, ".pdf\n";
       }
 
       if $md {
-        $md-refs ~= [~] '[', $pod-ref, ' md]: ', 'https://', $g,
+        $md-refs ~= [~] '[', $pod-ref, ' md]: ', 'https://github.com/', $g,
                     '/blob/master', 'doc'.IO.d ?? '/doc/' !! '/',
                     $pod-bn, ".md\n";
       }
@@ -129,17 +132,15 @@ sub recurse-dir (
 }
 
 #-------------------------------------------------------------------------------
-sub render-pod (
-  Str:D $pod, Str :$style, Bool :$pdf, Bool :$html, Bool :$md
-) {
+sub render-pod ( Str:D $pod, Bool :$pdf, Bool :$html, Bool :$md ) {
 
   my Pod::Render $pr .= new;
-  $pr.render( 'html', $pod, :$style) if $html;
-  $pr.render( 'pdf', $pod, :$style) if $pdf;
+  $pr.render( 'pdf', $pod) if $pdf;
+  $pr.render( 'html', $pod) if $html and not $pdf;
   $pr.render( 'md', $pod) if $md;
 
   # Default is html
-  #$pr.render( 'html', $pod, :$style) unless $html or $pdf or $md;
+  $pr.render( 'html', $pod) unless $html or $pdf or $md;
 }
 
 #-------------------------------------------------------------------------------
