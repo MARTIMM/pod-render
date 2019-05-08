@@ -6,3 +6,4 @@ Tests/insert*
 */.procomp
 *.zargo~
 markdown-refs.md
+test-pod*
