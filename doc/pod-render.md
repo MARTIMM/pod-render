@@ -36,8 +36,10 @@ Options
 
 Generate a list of markdown references into the file **markdown-refs.md**. The format of this file will be like the following;
 
-    [pod-render.pl6]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/pod-render.html
-    [Render.pm6]: https://htmlpreview.github.io/?https://github.com/MARTIMM/pod-render/blob/master/doc/Render.html
+    [pod-render.pl6 html]: https://nbviewer.jupyter.org/github/MARTIMM/pod ...
+    [pod-render.pl6 pdf]: https://nbviewer.jupyter.org/github/MARTIMM/pod- ...
+    [pod-render.pl6 md]: https://github.com/MARTIMM/pod-render/blob/master ...
+    ...
 
 Where the github path is **github.com/MARTIMM/pod-render** and the pod files are found at **bin/pod-render.pl6** and **lib/Pod/Render.pm6**.
 
@@ -51,9 +53,5 @@ Generate output in md format. Result is placed in current directory or in the **
 
 ### --pdf
 
-Generate output in pdf format. Result is placed in current directory or in the **./doc** directory if it exists. Pdf is generated using the program **wkhtmltopdf** so that must be installed.
-
-### --style=some-prettify-style
-
-This program uses the Google prettify javascript and stylesheets to render the code. The styles are `default`, `desert`, `doxy`, `sons-of-obsidian` and `sunburst`. By default the progam uses, well you guessed it, 'default'. This option is only useful with `--html` and `--pdf`. There is another style which is just plain and simple and not used with the google prettifier. This one is selected using `pod6`.
+Generate output in pdf format. Result is placed in current directory or in the **./doc** directory if it exists. Pdf is generated using the program **prince** so that must be installed. See [downloads](https://www.princexml.com/download/).
 

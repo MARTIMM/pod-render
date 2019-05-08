@@ -3,7 +3,7 @@
     <head>
         <title>class Pod::Render</title>
         <meta charset="UTF-8" />
-  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/7C320646D139C8A72FF800C3E2B2EB89B53BEB5B.css">
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/A966EF337FDD197751AAB15FE3162DFAC51330A6.css">
         <style>
         kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
         samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
@@ -20,7 +20,7 @@
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <h1 class='title'>class Pod::Render</h1>
+    <div class='title h1'><img src= 'file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/6D01FC5C4A33B047707791D5D149F4EEC6BE9917.svg' align='left'>class Pod::Render</h1>
     <p class='subtitle'>Render POD documents to HTML, PDF or MD</p>
     <nav class="indexgroup">
 <table id="TOC">
@@ -34,21 +34,19 @@
 
     <div class="pod-body">
     <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
-
-                   <pre class="prettyprint lang-perl6 linenums">use Pod::Render;
+<pre class="pod-block-code">use Pod::Render;
 my Pod::Render $pr .= new;
 $pr.render( &#39;html&#39;, &#39;my-excellent-pod-document.pod6&#39;);</pre>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
 <h2 id="render"><a class="u" href="#___top" title="go to top of document">render</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi method render ( &#39;html&#39;, Str:D $pod-file, Str :$style )
-multi method render ( &#39;pdf&#39;, Str:D $pod-file, Str :$style )
+<pre class="pod-block-code">multi method render ( &#39;html&#39;, Str:D $pod-file )
+multi method render ( &#39;pdf&#39;, Str:D $pod-file )
 multi method render ( &#39;md&#39;, Str:D $pod-file )</pre>
-<p>Render the document given by <code>$pod-file</code> to one of the output formats html, pdf or markdown. To generate pdf the program <code>wkhtmltopdf</code> is used so that program must be installed. The style is one of the following styles; pod6, default, desert, doxy, sons-of-obsidian or sunburst.</p>
+<p>Render the document given by <code>$pod-file</code> to one of the output formats html, pdf or markdown. To generate pdf the program <code>prince</code> is used so that program must be installed. The style is one of the following styles; pod6, default, desert, doxy, sons-of-obsidian or sunburst.</p>
 
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 
