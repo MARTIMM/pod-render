@@ -68,33 +68,59 @@ tr.toc-level-1 tr.toc-level-2 tr.toc-level-3 tr.toc-level-4 tr.toc-level-5 tr.to
 */
 }
 
-#TOC_Title {
+div.title {
+  border-width:         1px;
+  border-style:         solid;
+  border-color:         #006000;
+  height:               50px;
+  font-size:            22pt;
+  font-weight:          bold;
+  padding-left:         4px;
+  padding-top:          18px;
+  background-color:     #c0e472;
+/*  background-image:     url("https://docs.perl6.org/images/Camelia.svg");
+*/
+  background-repeat:    no-repeat;
+  background-position:  7px 0px;
+  background-size:      45px;
+  box-shadow:           10px 10px 5px #a0b060;
+  border-radius:        7px;
+}
+
+div.title img {
+  width:                45px;
+  height:               45px;
+  padding-top:          4px;
+  padding-right:        4px;
+}
+
+p.subtitle {
   font-size:            16pt;
   font-weight:          bold;
 }
 
-p.subtitle {
+#TOC_Title {
   font-size:            14pt;
   font-weight:          bold;
 }
 
 h1 {
-  font-size:            16pt;
+  font-size:            18pt;
   font-weight:          bold;
 }
 
 h2 {
-  font-size:            14pt;
+  font-size:            16pt;
   font-weight:          bold;
 }
 
 h3 {
-  font-size:            12pt;
+  font-size:            14pt;
   font-weight:          bold;
 }
 
 h4 h5 h6 {
-  font-size:            10pt;
+  font-size:            14pt;
 }
 
 td.toc-text {
@@ -127,31 +153,6 @@ table.pod-table tr:nth-child(even) {
 
 table.pod-table tr th {
   background:           #c0e472;
-}
-
-div.title {
-  border-width:         1px;
-  border-style:         solid;
-  border-color:         #006000;
-  height:               60px;
-  font-size:            50px;
-  padding-left:         4px;
-/*  padding-top:          4px;
-*/  background-color:     #c0e472;
-/*  background-image:     url("https://docs.perl6.org/images/Camelia.svg");
-*/
-  background-repeat:    no-repeat;
-  background-position:  7px 0px;
-  background-size:      45px;
-  box-shadow:           10px 10px 5px #a0b060;
-  border-radius:        7px;
-}
-
-div.title img {
-  width:                45px;
-  height:               45px;
-  padding-top:          6px;
-  padding-right:        4px;
 }
 
 a {
