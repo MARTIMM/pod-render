@@ -10,6 +10,8 @@ use Pod::Render;
 
 =SUBTITLE Program to render Perl6 Pod documentation
 
+Render your pod documents and generate html, pdf or md output depending on the options --html, --pdf or --md. When one of the options are not used, the output files of previous runs are removed (see as if it is older documentation). The default option is --html if none of them is provided.
+
 =head1 Synopsis
 
   pod-render.pl6 --pdf bin/pod-render.pl6
@@ -21,12 +23,16 @@ pod-render.pl6 [<R<options>> ...] <R<pod-file | pod-dir>> ...
 =head2 Arguments
 
 =head3 pod-file
-=para This is the file where to find the pod documentation and is rendered. The result is placed in the current directory or, when a directory B<doc> exists, in that directory. A pod file is checked to have at least 5 pod render commands like C<=begin ...> or C<=for ...> to get rendered.
+=para This is the file where to find the pod documentation and is rendered. A pod file is checked to have at least 5 pod render commands like C<=begin ...> or C<=for ...> to get rendered.
 
 =head3 pod-dir
 =para Search directory and subdirectories for perl6 pod documentation looking for extensions B<.pl6>, B<.pm6>, B<.pod6>, B<.pl>, B<.pm> or B<.pod>.
 
 =head2 Options
+
+=head3 --d=dir
+
+Normally the output is placed in the current directory or in the B<./doc> directory if it exists. This option will place the output elsewhere if present. if 'dir' does not exist, it is placed in the current directory.
 
 =head3 --g=github-path
 
@@ -56,11 +62,16 @@ Generate output in pdf format. Result is placed in current directory or in the B
 my Str $md-refs = '';
 #my Str $pv = 'https://htmlpreview.github.io/?';
 my Str $pv = 'https://nbviewer.jupyter.org/github/';
+my Str $out-dir = '.';
 
 sub MAIN (
-  *@pod-files, Str :$g,
+  *@pod-files, Str :$g, Str :$d,
   Bool :$pdf = False, Bool :$html = False, Bool :$md = False
 ) {
+
+  $out-dir = (($d // '/non-existend-dir').IO.d ?? $d !! Any) //
+             ('doc'.IO.d ?? 'doc' !! '.');
+  $out-dir ~= '/';
 
   for @pod-files -> $pod {
     recurse-dir( $pod, :$g, :$pdf, :$html, :$md);
@@ -74,6 +85,7 @@ sub recurse-dir (
   Str:D $pod, Str :$g, Bool :$pdf, Bool :$html is copy, Bool :$md
 ) {
 
+  # check if name is a dir. if so, recursivly through dir content
   if $pod.IO.d {
     for dir($pod).sort -> $pf {
 
@@ -86,9 +98,6 @@ sub recurse-dir (
   else {
     return unless check-pod($pod);
     #$html = True if ?$g or !($pdf or $md);
-
-    # when pdf is selected html is automatically generated too in this process
-    $html = True if $pdf;
 
     note "Render pod in $pod";
     render-pod( $pod, :$pdf, :$html, :$md);
@@ -108,7 +117,7 @@ sub recurse-dir (
       else {
         $pod-ref = $pod.IO.basename;
       }
-#https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GObject.pdf
+
       # write out entries
       if $html {
         $md-refs ~= [~] '[', $pod-ref, ' html]: ', $pv, $g,
@@ -132,15 +141,30 @@ sub recurse-dir (
 }
 
 #-------------------------------------------------------------------------------
-sub render-pod ( Str:D $pod, Bool :$pdf, Bool :$html, Bool :$md ) {
+sub render-pod ( Str:D $pod-file, Bool :$pdf, Bool :$html is copy, Bool :$md ) {
 
   my Pod::Render $pr .= new;
-  $pr.render( 'pdf', $pod) if $pdf;
-  $pr.render( 'html', $pod) if $html and not $pdf;
-  $pr.render( 'md', $pod) if $md;
+
+  my Str $html-file = $out-dir ~ $pod-file.IO.basename;
+  $html-file ~~ s/\. <-[.]>+ $/.html/;
+
+  my Str $pdf-file = $html-file;
+  $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
+
+  my Str $md-file = $html-file;
+  $md-file ~~ s/\. <-[.]>+ $/.md/;
 
   # Default is html
-  $pr.render( 'html', $pod) unless $html or $pdf or $md;
+  $html = True unless $html or $pdf or $md;
+
+  $pr.render( 'pdf', $pod-file, $pdf-file) if $pdf;
+  $pr.render( 'html', $pod-file, $html-file) if $html;
+  $pr.render( 'md', $pod-file, $md-file) if $md;
+
+  # remove previously generated output if is not selected in this run
+  unlink $html-file unless $html;
+  unlink $md-file unless $md;
+  unlink $pdf-file unless $pdf;
 }
 
 #-------------------------------------------------------------------------------

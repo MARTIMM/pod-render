@@ -16,7 +16,9 @@ use Pod::To::Markdown;
 
   use Pod::Render;
   my Pod::Render $pr .= new;
-  $pr.render( 'html', 'my-excellent-pod-document.pod6');
+  $pr.render(
+    'html', 'my-excellent-pod-document.pod6', 'ny-dir/my-html-result.html'
+  );
 
 =end pod
 #-------------------------------------------------------------------------------
@@ -30,75 +32,38 @@ class Pod::Render:auth<https://github.com/MARTIMM> {
 
   =head2 render
 
-    multi method render ( 'html', Str:D $pod-file )
-    multi method render ( 'pdf', Str:D $pod-file )
-    multi method render ( 'md', Str:D $pod-file )
+    multi method render ( 'html', Str:D $pod-file, Str $html-file )
+    multi method render ( 'pdf', Str:D $pod-file, Str $pdf-file )
+    multi method render ( 'md', Str:D $pod-file, Str $md-file )
 
   Render the document given by C<$pod-file> to one of the output formats html,
   pdf or markdown. To generate pdf the program C<prince> is used so that
-  program must be installed. The style is one of the following styles;
-  pod6, default, desert, doxy, sons-of-obsidian or sunburst.
+  program must be installed.
 
   =end pod
   #-----------------------------------------------------------------------------
-  multi method render ( 'html', Str:D $pod-file ) {
+  multi method render ( 'html', Str:D $pod-file, Str $html-file ) {
 
     my Str $html = self!html($pod-file.IO.absolute);
-
-    my Str $html-file;
-    if 'doc'.IO ~~ :d {
-      $html-file = 'doc/' ~ $pod-file.IO.basename;
-    }
-
-    else {
-      $html-file = $pod-file.IO.basename;
-    }
-
-    $html-file ~~ s/\. <-[.]>+ $/.html/;
-    spurt( $html-file, $html);
+    $html-file.IO.spurt($html);
   }
 
   #-----------------------------------------------------------------------------
-  multi method render ( 'pdf', Str:D $pod-file ) {
+  multi method render ( 'pdf', Str:D $pod-file, Str $pdf-file ) {
 
     my Str $html = self!html($pod-file.IO.absolute);
     $!involved ~= ', prince';
 
-    my Str $html-file;
-    if 'doc'.IO ~~ :d {
-      $html-file = 'doc/' ~ $pod-file.IO.basename;
-    }
-
-    else {
-      $html-file = $pod-file.IO.basename;
-    }
-
-    $html-file ~~ s/\. <-[.]>+ $/.html/;
-    spurt( $html-file, $html);
-
-    my Str $pdf-file = $html-file;
-    $pdf-file ~~ s/\. <-[.]>+ $/.pdf/;
-
+    '/tmp/html-file'.IO.spurt($html);
     # send result to pdf generator
-    run 'prince', $html-file, '-o', $pdf-file;
+    run 'prince', '/tmp/html-file', '-o', $pdf-file;
+    unlink '/tmp/html-file';
   }
 
   #-----------------------------------------------------------------------------
-  multi method render ( 'md', Str:D $pod-file ) {
+  multi method render ( 'md', Str:D $pod-file, Str $md-file ) {
 
     $!involved ~= ', Pod::To::Markdown';
-
-    my Str $md-file;
-    if 'doc'.IO ~~ :d {
-      $md-file = 'doc/' ~ $pod-file.IO.basename;
-    }
-
-    else {
-      $md-file = $pod-file.IO.basename;
-    }
-
-    $md-file ~~ s/\. <-[.]>+ $/.md/;
-
     my $cmd = run "perl6", "--doc=Markdown", $pod-file.IO.absolute, :out;
     $md-file.IO.spurt($cmd.out.slurp);
   }
