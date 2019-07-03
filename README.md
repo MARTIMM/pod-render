@@ -33,6 +33,10 @@ The pdf output is generated with the program `prince`. You can find the downdloa
 
 This project is tested with latest Rakudo built on MoarVM implementing Perl v6.
 
+## Dependency on external programs
+
+When generating pdf files, the program uses __[prince](https://www.princexml.com/download/)__ to get the work done. Please also read the [end user license agreement](https://www.princexml.com/license/) before generating prince.
+
 ## Authors
 
 `© Marcel Timmerman (MARTIMM on github)`
