@@ -4,13 +4,6 @@ branches:
 
 language: perl6
 
-perl6:
-  - latest
-
 install:
-  - rakudobrew build-zef ${TRAVIS_PERL6_VERSION#latest}
-  - zef --depsonly install .
-
-cache:
-  directories:
-    - $TRAVIS_BUILD_DIR/.rakudobrew
+  - rakudobrew build-zef
+  - zef --debug --depsonly install .
