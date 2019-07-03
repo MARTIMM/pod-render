@@ -4,16 +4,6 @@
         <title>class Pod::Render</title>
         <meta charset="UTF-8" />
   <link type="text/css" rel="stylesheet" href="file:///home/marcel/Languages/Perl6/Projects/pod-render/resources/pod6.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
         
         
     </head>
@@ -36,17 +26,19 @@
     <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
 <pre class="pod-block-code">use Pod::Render;
 my Pod::Render $pr .= new;
-$pr.render( &#39;html&#39;, &#39;my-excellent-pod-document.pod6&#39;);</pre>
+$pr.render(
+  &#39;html&#39;, &#39;my-excellent-pod-document.pod6&#39;, &#39;ny-dir/my-html-result.html&#39;
+);</pre>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
 <h2 id="render"><a class="u" href="#___top" title="go to top of document">render</a></h2>
-<pre class="pod-block-code">multi method render ( &#39;html&#39;, Str:D $pod-file )
-multi method render ( &#39;pdf&#39;, Str:D $pod-file )
-multi method render ( &#39;md&#39;, Str:D $pod-file )</pre>
-<p>Render the document given by <code>$pod-file</code> to one of the output formats html, pdf or markdown. To generate pdf the program <code>prince</code> is used so that program must be installed. The style is one of the following styles; pod6, default, desert, doxy, sons-of-obsidian or sunburst.</p>
+<pre class="pod-block-code">multi method render ( &#39;html&#39;, Str:D $pod-file, Str $html-file )
+multi method render ( &#39;pdf&#39;, Str:D $pod-file, Str $pdf-file )
+multi method render ( &#39;md&#39;, Str:D $pod-file, Str $md-file )</pre>
+<p>Render the document given by <code>$pod-file</code> to one of the output formats html, pdf or markdown. To generate pdf the program <code>prince</code> is used so that program must be installed.</p>
 
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall, prince, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

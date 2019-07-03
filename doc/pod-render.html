@@ -4,16 +4,6 @@
         <title>pod-render.pl6</title>
         <meta charset="UTF-8" />
   <link type="text/css" rel="stylesheet" href="file:///home/marcel/Languages/Perl6/Projects/pod-render/resources/pod6.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
         
         
     </head>
@@ -25,31 +15,35 @@
     <nav class="indexgroup">
 <table id="TOC">
 <caption><h2 id="TOC_Title">Table of Contents</h2></caption>
-  <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+   <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
   <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Usage">Usage</a></td></tr>
       <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#Arguments">Arguments</a></td></tr>
  <tr class="toc-level-3"><td class="toc-number">2.1.1</td><td class="toc-text"><a href="#pod-file">pod-file</a></td></tr>
-        <tr class="toc-level-3"><td class="toc-number">2.1.2</td><td class="toc-text"><a href="#pod-dir">pod-dir</a></td></tr>
+      <tr class="toc-level-3"><td class="toc-number">2.1.2</td><td class="toc-text"><a href="#pod-dir">pod-dir</a></td></tr>
               <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#Options">Options</a></td></tr>
- <tr class="toc-level-3"><td class="toc-number">2.2.1</td><td class="toc-text"><a href="#--g=github-path">--g=github-path</a></td></tr>
-            <tr class="toc-level-3"><td class="toc-number">2.2.2</td><td class="toc-text"><a href="#--html">--html</a></td></tr>
-    <tr class="toc-level-3"><td class="toc-number">2.2.3</td><td class="toc-text"><a href="#--md">--md</a></td></tr>
-    <tr class="toc-level-3"><td class="toc-number">2.2.4</td><td class="toc-text"><a href="#--pdf">--pdf</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">2.2.1</td><td class="toc-text"><a href="#--d=dir">--d=dir</a></td></tr>
+    <tr class="toc-level-3"><td class="toc-number">2.2.2</td><td class="toc-text"><a href="#--g=github-path">--g=github-path</a></td></tr>
+            <tr class="toc-level-3"><td class="toc-number">2.2.3</td><td class="toc-text"><a href="#--html">--html</a></td></tr>
+    <tr class="toc-level-3"><td class="toc-number">2.2.4</td><td class="toc-text"><a href="#--md">--md</a></td></tr>
+    <tr class="toc-level-3"><td class="toc-number">2.2.5</td><td class="toc-text"><a href="#--pdf">--pdf</a></td></tr>
        
 </table>
 </nav>
 
     <div class="pod-body">
-    <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+    <p>Render your pod documents and generate html, pdf or md output depending on the options --html, --pdf or --md. When one of the options are not used, the output files of previous runs are removed (see as if it is older documentation). The default option is --html if none of them is provided.</p>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
 <pre class="pod-block-code">pod-render.pl6 --pdf bin/pod-render.pl6</pre>
 <h1 id="Usage"><a class="u" href="#___top" title="go to top of document">Usage</a></h1>
 <p>pod-render.pl6 [&lt;<var>options</var>&gt; ...] &lt;<var>pod-file | pod-dir</var>&gt; ...</p>
 <h2 id="Arguments"><a class="u" href="#___top" title="go to top of document">Arguments</a></h2>
 <h3 id="pod-file"><a class="u" href="#___top" title="go to top of document">pod-file</a></h3>
-<p>This is the file where to find the pod documentation and is rendered. The result is placed in the current directory or, when a directory <strong>doc</strong> exists, in that directory. A pod file is checked to have at least 5 pod render commands like <code>=begin ...</code> or <code>=for ...</code> to get rendered.</p>
+<p>This is the file where to find the pod documentation and is rendered. A pod file is checked to have at least 5 pod render commands like <code>=begin ...</code> or <code>=for ...</code> to get rendered.</p>
 <h3 id="pod-dir"><a class="u" href="#___top" title="go to top of document">pod-dir</a></h3>
 <p>Search directory and subdirectories for perl6 pod documentation looking for extensions <strong>.pl6</strong>, <strong>.pm6</strong>, <strong>.pod6</strong>, <strong>.pl</strong>, <strong>.pm</strong> or <strong>.pod</strong>.</p>
 <h2 id="Options"><a class="u" href="#___top" title="go to top of document">Options</a></h2>
+<h3 id="--d=dir"><a class="u" href="#___top" title="go to top of document">--d=dir</a></h3>
+<p>Normally the output is placed in the current directory or in the <strong>./doc</strong> directory if it exists. This option will place the output elsewhere if present. if &#39;dir&#39; does not exist, it is placed in the current directory.</p>
 <h3 id="--g=github-path"><a class="u" href="#___top" title="go to top of document">--g=github-path</a></h3>
 <p>Generate a list of markdown references into the file <strong>markdown-refs.md</strong>. The format of this file will be like the following;</p>
 <pre class="pod-block-code">[pod-render.pl6 html]: https://nbviewer.jupyter.org/github/MARTIMM/pod ...
@@ -67,6 +61,6 @@
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall, prince, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

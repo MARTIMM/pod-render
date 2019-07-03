@@ -8,6 +8,8 @@ SUBTITLE
 
 Program to render Perl6 Pod documentation
 
+Render your pod documents and generate html, pdf or md output depending on the options --html, --pdf or --md. When one of the options are not used, the output files of previous runs are removed (see as if it is older documentation). The default option is --html if none of them is provided.
+
 Synopsis
 ========
 
@@ -23,7 +25,7 @@ Arguments
 
 ### pod-file
 
-This is the file where to find the pod documentation and is rendered. The result is placed in the current directory or, when a directory **doc** exists, in that directory. A pod file is checked to have at least 5 pod render commands like `=begin ...` or `=for ...` to get rendered.
+This is the file where to find the pod documentation and is rendered. A pod file is checked to have at least 5 pod render commands like `=begin ...` or `=for ...` to get rendered.
 
 ### pod-dir
 
@@ -31,6 +33,10 @@ Search directory and subdirectories for perl6 pod documentation looking for exte
 
 Options
 -------
+
+### --d=dir
+
+Normally the output is placed in the current directory or in the **./doc** directory if it exists. This option will place the output elsewhere if present. if 'dir' does not exist, it is placed in the current directory.
 
 ### --g=github-path
 
