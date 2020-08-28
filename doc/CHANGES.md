@@ -4,6 +4,8 @@ See [semantic versioning](http://semver.org/). Please note point 4. on
 that page: *Major version zero (0.y.z) is for initial development. Anything may
 change at any time. The public API should not be considered stable.*
 
+* 2020-08-28 0.8.1
+  * Modified --d option in the pod-render.pl6 program to be empty and pick the output directory from the first argument on the command line.
 * 2019-07-03 0.8.0
   * Added option --d to specify a destination directory
   * Remove older output files
