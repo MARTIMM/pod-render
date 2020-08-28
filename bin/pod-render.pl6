@@ -18,7 +18,7 @@ Render your pod documents and generate html, pdf or md output depending on the o
 
 =head1 Usage
 
-pod-render.pl6 [<R<options>> ...] <R<pod-file | pod-dir>> ...
+  pod-render.pl6 [<R<options>> ...] <R<pod-file | pod-dir>> ...
 
 =head2 Arguments
 
@@ -33,6 +33,14 @@ pod-render.pl6 [<R<options>> ...] <R<pod-file | pod-dir>> ...
 =head3 --d=dir
 
 Normally the output is placed in the current directory or in the B<./doc> directory if it exists. This option will place the output elsewhere if present. if 'dir' does not exist, it is placed in the current directory.
+
+=head3 --d
+
+Same as --d=dir except that the directory is taken from the first argument on the commandline. This is more convenient because autocomplete can be used in a terminal session.
+
+  pod-render.pl6 ... --d ... <outout-dir> <R<pod-file | pod-dir>> ...
+
+Small warning though; the option will be set to "◩◪◩◪◩◪◩◪◩◪" to recognize that the program must get the output dir from the argument list. Raku will show a usage output if I don't.
 
 =head3 --g=github-path
 
@@ -64,10 +72,23 @@ my Str $md-refs = '';
 my Str $pv = 'https://nbviewer.jupyter.org/github/';
 my Str $out-dir = '.';
 
+# modify the argument list if option --d is empty.
+for @*ARGS -> $a is rw {
+  if $a ~~ m/^ '-' '-'? 'd' $/ {
+    # set the option to some non sensical directory name
+    $a = '--d=◩◪◩◪◩◪◩◪◩◪';
+    last;
+  }
+}
+
 sub MAIN (
-  *@pod-files, Str :$g, Str :$d,
+  *@pod-files, Str :$g, Str :$d is copy,
   Bool :$pdf = False, Bool :$html = False, Bool :$md = False
 ) {
+
+  # shift the output directory from the argument list when
+  # the odd setting matches
+  $d = @pod-files.shift if $d.defined and $d eq '◩◪◩◪◩◪◩◪◩◪';
 
   $out-dir = (($d // '/non-existend-dir').IO.d ?? $d !! Any) //
              ('doc'.IO.d ?? 'doc' !! '.');
