@@ -18,7 +18,7 @@ Synopsis
 Usage
 =====
 
-pod-render.pl6 [<<var>options</var>> ...] <<var>pod-file | pod-dir</var>> ...
+    pod-render.pl6 [<R<options>> ...] <R<pod-file | pod-dir>> ...
 
 Arguments
 ---------
@@ -37,6 +37,14 @@ Options
 ### --d=dir
 
 Normally the output is placed in the current directory or in the **./doc** directory if it exists. This option will place the output elsewhere if present. if 'dir' does not exist, it is placed in the current directory.
+
+### --d
+
+Same as --d=dir except that the directory is taken from the first argument on the commandline. This is more convenient because autocomplete can be used in a terminal session.
+
+    pod-render.pl6 ... --d ... <outout-dir> <R<pod-file | pod-dir>> ...
+
+Small warning though; the option will be set to "◩◪◩◪◩◪◩◪◩◪" to recognize that the program must get the output dir from the argument list. Raku will show a usage output if I don't.
 
 ### --g=github-path
 
