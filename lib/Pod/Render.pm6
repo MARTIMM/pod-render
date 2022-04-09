@@ -1,6 +1,6 @@
 use v6;
 use Pod::To::HTML;
-use Pod::To::Markdown;
+#use Pod::To::Markdown;
 
 #-------------------------------------------------------------------------------
 #unit package Pod:auth<https://github.com/MARTIMM>;
@@ -22,7 +22,7 @@ use Pod::To::Markdown;
 
 =end pod
 #-------------------------------------------------------------------------------
-class Pod::Render:auth<https://github.com/MARTIMM> {
+class Pod::Render:auth<github.com/MARTIMM> {
 
   has Str $!involved = 'Pod::Render';
 

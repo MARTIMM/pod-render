@@ -1,22 +1,26 @@
 {
-  "authors": [
-    "Marcel Timmerman"
-  ],
+  "name": "Pod::Render",
+  "description": "Render pod docs to html, pdf or md",
+  "version": "0.8.2",
+  "authors": [ "Marcel Timmerman" ],
+  "auth": "github:MARTIMM",
+
   "depends": [
     "Pod::To::HTML",
     "Pod::To::Markdown"
   ],
-  "description": "Render pod docs to html, pdf or md",
+
   "license": "Artistic-2.0",
-  "name": "Pod::Render",
   "perl": "6",
+
   "provides": {
     "Pod::Render":    "lib/Pod/Render.pm6"
   },
+
   "resources": [
     "Camelia.svg",
     "pod6.css"
   ],
-  "source-url": "git://github.com/MARTIMM/pod-render.git",
-  "version": "0.8.1"
+
+  "source-url": "git://github.com/MARTIMM/pod-render.git"
 }
